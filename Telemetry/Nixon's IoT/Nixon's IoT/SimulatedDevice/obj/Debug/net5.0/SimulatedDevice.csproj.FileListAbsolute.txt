@@ -1,0 +1,204 @@
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.exe
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.deps.json
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.json
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.dev.json
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\ref\SimulatedDevice.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.pdb
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Buffers.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.Mqtt.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Common.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Handlers.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Transport.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Amqp.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Client.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Shared.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csprojAssemblyReference.cache
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.GeneratedMSBuildEditorConfig.editorconfig
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfoInputs.cache
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfo.cs
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CoreCompileInputs.cache
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CopyComplete
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\ref\SimulatedDevice.dll
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.pdb
+C:\IoT\azure-iot-samples-csharp-master\azure-iot-samples-csharp-master\iot-hub\Quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.genruntimeconfig.cache
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.exe
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.deps.json
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.json
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.dev.json
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Buffers.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.Mqtt.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Common.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Handlers.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Transport.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Amqp.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Client.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Shared.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.AssemblyReference.cache
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfoInputs.cache
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfo.cs
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CoreCompileInputs.cache
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CopyComplete
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\refint\SimulatedDevice.dll
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.genruntimeconfig.cache
+C:\Users\howc3\Downloads\IT3681-azure-iot-quickstarts\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\ref\SimulatedDevice.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.exe
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.deps.json
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.json
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.dev.json
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Buffers.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.Mqtt.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Common.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Handlers.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Transport.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Amqp.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Client.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Shared.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.AssemblyReference.cache
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfoInputs.cache
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfo.cs
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CoreCompileInputs.cache
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CopyComplete
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\refint\SimulatedDevice.dll
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.genruntimeconfig.cache
+C:\Users\howc3\source\repos2022\IT3681-azure-iot-quickstarts (AY2023S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\ref\SimulatedDevice.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.AssemblyReference.cache
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfoInputs.cache
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfo.cs
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.exe
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.deps.json
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.json
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.dev.json
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Buffers.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.Mqtt.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Common.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Handlers.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Transport.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Amqp.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Client.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Shared.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\Simulate.2F79E737.Up2Date
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\refint\SimulatedDevice.dll
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.genruntimeconfig.cache
+C:\Users\ASUS\Downloads\IT3681-azure-iot-quickstarts (AY2025S1)\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\ref\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.exe
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.deps.json
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.json
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.dev.json
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Buffers.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.Mqtt.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Common.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Handlers.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\DotNetty.Transport.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Amqp.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Client.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Shared.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.AssemblyReference.cache
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfoInputs.cache
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfo.cs
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\Simulate.2F79E737.Up2Date
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\refint\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.genruntimeconfig.cache
+C:\Users\ASUS\Desktop\Nixon's IoT\Nixon's IoT\azure-iot-quickstarts\SimulatedDevice\obj\Debug\net5.0\ref\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.exe
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.deps.json
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.json
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.runtimeconfig.dev.json
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\DotNetty.Buffers.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\DotNetty.Codecs.Mqtt.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\DotNetty.Common.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\DotNetty.Handlers.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\DotNetty.Transport.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Amqp.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Client.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Microsoft.Azure.Devices.Shared.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\Microsoft.WindowsAzure.Storage.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.AssemblyReference.cache
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfoInputs.cache
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.AssemblyInfo.cs
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\Simulate.2F79E737.Up2Date
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\refint\SimulatedDevice.dll
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.pdb
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\SimulatedDevice.genruntimeconfig.cache
+C:\Users\ASUS\Desktop\Nix's IoT v3\Nixon's IoT\SimulatedDevice\obj\Debug\net5.0\ref\SimulatedDevice.dll

@@ -1,0 +1,125 @@
+﻿@model TryMeBitch.Models.Station
+
+@{
+    ViewData["Title"] = "Edit Station";
+    var lines = new Dictionary<string, string> {
+        { "NSL", "bg-red-500 text-white" },
+        { "EWL", "bg-green-500 text-white" },
+        { "DTL", "bg-blue-500 text-white" },
+        { "CCL", "bg-yellow-400 text-black" },
+        { "NEL", "bg-purple-600 text-white" },
+        { "TEL", "bg-amber-600 text-white" }
+    };
+}
+
+
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white px-6 py-10">
+    <div class="max-w-3xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold">Edit Station</h1>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg space-y-6">
+            <form asp-action="Edit" class="grid grid-cols-1 gap-6">
+                <input type="hidden" asp-for="StationID" />
+
+                <!-- Station Name -->
+                <div class="relative">
+                    <input asp-for="StationName"
+                           class="peer w-full border border-gray-300 dark:border-gray-600 rounded-md bg-transparent px-3 pt-6 pb-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                           placeholder=" " />
+                    <label class="absolute left-3 top-2 text-xs text-gray-500 dark:text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs">
+                        Station Name
+                    </label>
+                    <span asp-validation-for="StationName" class="text-red-500 text-sm" />
+                </div>
+
+                <!-- Type Dropdown -->
+                <div class="relative">
+                    <select asp-for="Type"
+                            class="peer w-full border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-sm px-3 pt-6 pb-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none">
+                        <option value="Station" selected="@(Model.Type == "Station")">Station</option>
+                        <option value="Interchange" selected="@(Model.Type == "Interchange")">Interchange</option>
+                    </select>
+                    <label class="absolute left-3 top-2 text-xs text-gray-500 dark:text-gray-400 transition-all peer-focus:top-2 peer-focus:text-xs">
+                        Type
+                    </label>
+                    <span asp-validation-for="Type" class="text-red-500 text-sm" />
+                </div>
+
+                <!-- Line Dropdown with color-coded options -->
+                <div class="relative">
+                    <select asp-for="StationLine"
+                            class="peer w-full border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-sm px-3 pt-6 pb-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none">
+                        @foreach (var line in lines)
+                        {
+                            <option value="@line.Key" class="@line.Value" selected="@(Model.StationLine == line.Key)">
+                                @line.Key
+                            </option>
+                        }
+                    </select>
+                    <label class="absolute left-3 top-2 text-xs text-gray-500 dark:text-gray-400 transition-all peer-focus:top-2 peer-focus:text-xs">
+                        Station Line
+                    </label>
+                    <span asp-validation-for="StationLine" class="text-red-500 text-sm" />
+                </div>
+
+                <!-- Latitude -->
+                <div class="relative">
+                    <input asp-for="Lat"
+                           class="peer w-full border border-gray-300 dark:border-gray-600 rounded-md bg-transparent px-3 pt-6 pb-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                           placeholder=" " />
+                    <label class="absolute left-3 top-2 text-xs text-gray-500 dark:text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs">
+                        Latitude
+                    </label>
+                    <span asp-validation-for="Lat" class="text-red-500 text-sm" />
+                </div>
+
+                <!-- Longitude -->
+                <div class="relative">
+                    <input asp-for="Lon"
+                           class="peer w-full border border-gray-300 dark:border-gray-600 rounded-md bg-transparent px-3 pt-6 pb-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                           placeholder=" " />
+                    <label class="absolute left-3 top-2 text-xs text-gray-500 dark:text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs">
+                        Longitude
+                    </label>
+                    <span asp-validation-for="Lon" class="text-red-500 text-sm" />
+                </div>
+
+                <!-- Distance -->
+                <div class="relative">
+                    <input asp-for="Distance"
+                           class="peer w-full border border-gray-300 dark:border-gray-600 rounded-md bg-transparent px-3 pt-6 pb-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                           placeholder=" " />
+                    <label class="absolute left-3 top-2 text-xs text-gray-500 dark:text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs">
+                        Distance to Next
+                    </label>
+                    <span asp-validation-for="Distance" class="text-red-500 text-sm" />
+                </div>
+
+                <!-- Next Station -->
+                <div class="relative">
+                    <input asp-for="NextStation"
+                           class="peer w-full border border-gray-300 dark:border-gray-600 rounded-md bg-transparent px-3 pt-6 pb-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                           placeholder=" " />
+                    <label class="absolute left-3 top-2 text-xs text-gray-500 dark:text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-xs">
+                        Next Station
+                    </label>
+                    <span asp-validation-for="NextStation" class="text-red-500 text-sm" />
+                </div>
+
+                <!-- Action buttons -->
+                <div class="flex justify-between mt-6">
+                    <a asp-action="Index"
+                       class="text-sm text-gray-600 dark:text-gray-300 hover:underline">
+                        ← Back to List
+                    </a>
+                    <button type="submit"
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-lg shadow">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

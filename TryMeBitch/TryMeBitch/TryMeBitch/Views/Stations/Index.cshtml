@@ -1,0 +1,56 @@
+﻿@model IEnumerable<TryMeBitch.Models.Station>
+
+@{
+    ViewData["Title"] = "Stations";
+}
+
+<div class="min-h-screen bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 px-4 py-6">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Stations</h1>
+
+        <div class="mb-4">
+            <a asp-action="Create" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white dark:text-white font-semibold py-2 px-4 rounded-lg transition">
+                + Create New
+            </a>
+        </div>
+
+        <div class="overflow-x-auto shadow ring-1 ring-black/5 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700 text-sm">
+                <thead class="bg-gray-100 dark:bg-gray-800 uppercase text-xs font-medium tracking-wider text-gray-600 dark:text-gray-300">
+                    <tr>
+                        <th class="px-4 py-3 text-left">Station Name</th>
+                        <th class="px-4 py-3 text-left">Type</th>
+                        <th class="px-4 py-3 text-left">Line</th>
+                        <th class="px-4 py-3 text-left">Latitude</th>
+                        <th class="px-4 py-3 text-left">Longitude</th>
+                        <th class="px-4 py-3 text-left">Distance</th>
+                        <th class="px-4 py-3 text-left">Next Station</th>
+                        <th class="px-4 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                            <td class="px-4 py-3">@Html.DisplayFor(modelItem => item.StationName)</td>
+                            <td class="px-4 py-3">@Html.DisplayFor(modelItem => item.Type)</td>
+                            <td class="px-4 py-3">@Html.DisplayFor(modelItem => item.StationLine)</td>
+                            <td class="px-4 py-3">@Html.DisplayFor(modelItem => item.Lat)</td>
+                            <td class="px-4 py-3">@Html.DisplayFor(modelItem => item.Lon)</td>
+                            <td class="px-4 py-3">@Html.DisplayFor(modelItem => item.Distance)</td>
+                            <td class="px-4 py-3">@Html.DisplayFor(modelItem => item.NextStation)</td>
+                            <td class="px-4 py-3 text-right space-x-2">
+                                <a asp-action="Edit" asp-route-id="@item.StationID"
+                                   class="text-indigo-500 hover:underline">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.StationID"
+                                   class="text-green-500 hover:underline">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.StationID"
+                                   class="text-red-500 hover:underline">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

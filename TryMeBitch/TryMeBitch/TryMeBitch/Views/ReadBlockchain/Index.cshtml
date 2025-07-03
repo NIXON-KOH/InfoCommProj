@@ -1,0 +1,274 @@
+﻿@model IEnumerable<TryMeBitch.Models.Blockchain.BlockchainEvent>
+@{
+    ViewData["Title"] = "Blockchain Viewer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .sort-icon {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 4px;
+    }
+</style>
+
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">Blockchain Event Log</h1>
+
+        <div class="overflow-x-auto rounded-lg shadow-sm border border-gray-200 dark:border-gray-600">
+            <table class="min-w-full bg-white dark:bg-gray-800 text-sm text-left" id="blockchainTable">
+                <thead class="bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 font-semibold uppercase">
+                    <tr>
+                        <th onclick="sortTable(0)" class="px-4 py-3 border-b"><span class="sort-icon"></span>Event ID</th>
+                        <th onclick="sortTable(1)" class="px-4 py-3 border-b"><span class="sort-icon"></span>Card ID</th>
+                        <th onclick="sortTable(2)" class="px-4 py-3 border-b"><span class="sort-icon"></span>Event Type</th>
+                        <th onclick="sortTable(3)" class="px-4 py-3 border-b"><span class="sort-icon"></span>Fare</th>
+                        <th onclick="sortTable(4)" class="px-4 py-3 border-b"><span class="sort-icon"></span>Station</th>
+                        <th onclick="sortTable(5)" class="px-4 py-3 border-b"><span class="sort-icon"></span>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="blockchainTableBody" class="divide-y divide-gray-100 dark:divide-gray-600"></tbody>
+            </table>
+        </div>
+
+        <div class="mt-4 flex justify-between items-center">
+            <button id="prevPage" class="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">Previous</button>
+            <span id="pageInfo" class="text-gray-700 dark:text-gray-300"></span>
+            <button id="nextPage" class="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded">Next</button>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+            <button id="TamperBlockchain" class="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white font-medium px-6 py-2 rounded-lg shadow-lg">Tamper Blockchain</button>
+            <button id="CheckIntegrity" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-800 text-white font-medium px-6 py-2 rounded-lg shadow-lg">Check Integrity</button>
+        </div>
+
+        <div class="mt-4 text-sm">
+            <div id="status" class="mb-2 font-medium text-gray-700 dark:text-gray-300"></div>
+            <div id="Tamperstatus" class="mb-2 font-medium text-gray-700 dark:text-gray-300"></div>
+        </div>
+
+        <div id="issues-panel" class="mt-6 hidden border rounded-xl shadow-sm transition-colors duration-300">
+            <div class="p-4">
+                <h2 class="text-lg font-semibold mb-4">Blockchain Integrity Issues</h2>
+                <div id="no-issues" class="hidden text-sm mb-2">No issues detected.</div>
+                <div id="issue-table-wrapper" class="overflow-x-auto">
+                    <table id="issue-table" class="min-w-full text-sm text-left border rounded-lg overflow-hidden">
+                        <thead class="font-semibold">
+                            <tr>
+                                <th class="px-4 py-2 border-b">Card</th>
+                                <th class="px-4 py-2 border-b">Event</th>
+                                <th class="px-4 py-2 border-b">Problem</th>
+                                <th class="px-4 py-2 border-b">Suggested Fix</th>
+                                <th class="px-4 py-2 border-b">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="issue-table-body" class="font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let blockchainEvents = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
+    let currentSortColumn = -1;
+    let currentSortDir = 'asc';
+    let currentPage = 1;
+    const rowsPerPage = 10;
+
+    function renderTable() {
+        const tbody = document.getElementById("blockchainTableBody");
+        tbody.innerHTML = '';
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const pagedItems = blockchainEvents.slice(start, start + rowsPerPage);
+
+        pagedItems.forEach(evt => {
+            const row = document.createElement('tr');
+            row.id = evt.Id;
+            row.className = "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors";
+            row.innerHTML = `
+                <td class="px-4 py-2">${evt.Id}</td>
+                <td class="px-4 py-2">${evt.CardId}</td>
+                <td class="px-4 py-2">${evt.EventType}</td>
+                <td class="px-4 py-2 text-blue-600 dark:text-blue-400 font-semibold">$${evt.FareCharged}</td>
+                <td class="px-4 py-2">${evt.Station}</td>
+                <td class="px-4 py-2">${new Date(evt.Timestamp).toLocaleString()}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${Math.ceil(blockchainEvents.length / rowsPerPage)}`;
+    }
+
+    document.getElementById("prevPage").addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable();
+        }
+    });
+
+    document.getElementById("nextPage").addEventListener('click', () => {
+        if (currentPage * rowsPerPage < blockchainEvents.length) {
+            currentPage++;
+            renderTable();
+        }
+    });
+
+    function sortTable(n) {
+        const dir = (currentSortColumn === n && currentSortDir === 'asc') ? 'desc' : 'asc';
+        currentSortColumn = n;
+        currentSortDir = dir;
+
+        const keys = ['Id', 'CardId', 'EventType', 'FareCharged', 'Station', 'Timestamp'];
+        const key = keys[n];
+
+        blockchainEvents.sort((a, b) => {
+            const valA = (a[key] || '').toString().toLowerCase();
+            const valB = (b[key] || '').toString().toLowerCase();
+            return dir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        });
+
+        updateSortIcons(n, dir);
+        renderTable();
+    }
+
+    function updateSortIcons(colIndex, dir) {
+        document.querySelectorAll("#blockchainTable th").forEach((th, i) => {
+            const icon = th.querySelector(".sort-icon");
+            if (!icon) return;
+            icon.innerHTML = (i === colIndex)
+                ? dir === 'asc'
+                    ? `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 15 12 9 18 15"/></svg>`
+                    : `<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>`
+                : '';
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderTable);
+
+    // Dark mode helpers
+    const isDark = () => document.documentElement.classList.contains('dark');
+
+    function resetRowClasses(Id) {
+        const normalClasses = isDark()
+            ? "hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors"
+            : "hover:bg-gray-50 text-gray-900 transition-colors";
+        document.getElementById(Id).className = normalClasses;
+    }
+
+    function setErrorRowClasses(Id) {
+        const errorClasses = isDark()
+            ? "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900 hover:bg-red-100 dark:hover:bg-red-800 transition-colors"
+            : "text-red-600 bg-red-50 hover:bg-red-100 transition-colors";
+        document.getElementById(Id).className = errorClasses;
+    }
+
+    document.getElementById("TamperBlockchain").addEventListener('click', () => {
+        fetch('/Read/Tamper', { method: 'POST' })
+            .then(res => res.json())
+            .then(response => {
+                const status = document.getElementById("Tamperstatus");
+                status.className = isDark() ? "text-red-600 dark:text-red-400" : "text-red-600";
+                status.textContent = response.success ? "Tampered" : "Tamper Failed";
+            })
+            .catch(() => {
+                const status = document.getElementById("Tamperstatus");
+                status.className = isDark() ? "text-red-600 dark:text-red-400" : "text-red-600";
+                status.textContent = "Error contacting server.";
+            });
+    });
+
+    document.getElementById("CheckIntegrity").addEventListener('click', () => {
+        fetch('/Read/checkBlockchain', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(blockchainEvents)
+        })
+            .then(res => res.json())
+            .then(issues => {
+                const panel = document.getElementById("issues-panel");
+                const table = document.getElementById("issue-table");
+                const tbody = document.getElementById("issue-table-body");
+                const noIssues = document.getElementById("no-issues");
+
+                if (issues.length === 0) {
+                    panel.className = isDark()
+                        ? "mt-6 border border-green-200 dark:border-green-700 bg-green-50 dark:bg-green-900 rounded-xl shadow-sm"
+                        : "mt-6 border border-green-200 bg-green-50 rounded-xl shadow-sm";
+                    panel.querySelector("h2").textContent = "✓ All Chains Valid";
+                    panel.querySelector("h2").className = isDark()
+                        ? "text-green-700 dark:text-green-300 text-lg font-semibold mb-4"
+                        : "text-green-700 text-lg font-semibold mb-4";
+                    noIssues.className = isDark() ? "text-green-800 dark:text-green-200" : "text-green-800";
+                    noIssues.textContent = "No issues detected.";
+                    noIssues.classList.remove("hidden");
+                    table.classList.add("hidden");
+                    const fixAll = document.getElementById("fixAllBtn");
+                    if (fixAll) fixAll.remove();
+                } else {
+                    panel.className = isDark()
+                        ? "mt-6 border border-red-200 dark:border-red-700 bg-red-50 dark:bg-red-900 rounded-xl shadow-sm"
+                        : "mt-6 border border-red-200 bg-red-50 rounded-xl shadow-sm";
+                    panel.querySelector("h2").textContent = "Blockchain Integrity Issues";
+                    panel.querySelector("h2").className = isDark()
+                        ? "text-red-700 dark:text-red-300 text-lg font-semibold mb-4"
+                        : "text-red-700 text-lg font-semibold mb-4";
+
+                    noIssues.classList.add("hidden");
+                    table.classList.remove("hidden");
+                    tbody.innerHTML = '';
+
+                    if (!document.getElementById("fixAllBtn")) {
+                        const fixAllBtn = document.createElement("button");
+                        fixAllBtn.id = "fixAllBtn";
+                        fixAllBtn.textContent = "Fix All";
+                        fixAllBtn.className = isDark()
+                            ? "mb-4 bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded shadow-lg"
+                            : "mb-4 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded shadow-lg";
+                        fixAllBtn.addEventListener('click', fixAll);
+                        document.getElementById("issue-table-wrapper").prepend(fixAllBtn);
+                    }
+
+                    issues.forEach(issue => {
+                        const tr = document.createElement("tr");
+                        tr.className = isDark() ? "text-red-800 dark:text-red-200" : "text-red-800";
+                        tr.innerHTML = `
+                            <td class="px-4 py-2 border-b">${issue.cardId}</td>
+                            <td class="px-4 py-2 border-b">${issue.Id}</td>
+                            <td class="px-4 py-2 border-b">${issue.problem}</td>
+                            <td class="px-4 py-2 border-b">${issue.suggestedFix}</td>
+                            <td class="px-4 py-2 border-b">
+                                <button class="FixIssue ${isDark() ? "bg-red-600 dark:bg-red-600 hover:bg-red-700 dark:hover:bg-red-800" : "bg-red-600 hover:bg-red-700"} text-white py-1 px-2 rounded text-xs">Fix Issue</button>
+                            </td>`;
+                        tbody.appendChild(tr);
+                        setErrorRowClasses(issue.Id);
+
+                        tr.querySelector(".FixIssue").addEventListener('click', () => {
+                            fetch('/Read/FixTamper', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({ cardId: issue.cardId, Id: issue.Id })
+                            }).then(() => {
+                                blockchainEvents.forEach(e => resetRowClasses(e.Id));
+                                document.getElementById("CheckIntegrity").click();
+                            });
+                        });
+                    });
+                }
+            });
+    });
+
+    function fixAll() {
+        fetch('/Read/FixAll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(blockchainEvents)
+        }).then(() => {
+            blockchainEvents.forEach(e => resetRowClasses(e.Id));
+            document.getElementById("CheckIntegrity").click();
+        });
+    }
+</script>

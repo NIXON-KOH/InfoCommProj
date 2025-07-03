@@ -1,0 +1,55 @@
+﻿@model TryMeBitch.Models.Station
+
+@{
+    ViewData["Title"] = "Station Details";
+}
+
+<div class="min-h-screen bg-white dark:bg-zinc-800 text-gray-800 dark:text-gray-100 px-6 py-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+        <h1 class="text-4xl font-bold tracking-tight">🚉 @Model.StationName</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+                <p><span class="font-medium text-gray-500 dark:text-gray-400">Type:</span> @Model.Type</p>
+                <p><span class="font-medium text-gray-500 dark:text-gray-400">Line:</span> @Model.StationLine</p>
+                <p><span class="font-medium text-gray-500 dark:text-gray-400">Latitude:</span> @Model.Lat</p>
+                <p><span class="font-medium text-gray-500 dark:text-gray-400">Longitude:</span> @Model.Lon</p>
+            </div>
+            <div>
+                <p><span class="font-medium text-gray-500 dark:text-gray-400">Distance to Next:</span> @Model.Distance km</p>
+                <p><span class="font-medium text-gray-500 dark:text-gray-400">Next Station:</span> @Model.NextStation</p>
+                <p><span class="font-medium text-gray-500 dark:text-gray-400">Station ID:</span> @Model.StationID</p>
+            </div>
+        </div>
+
+        <div class="w-full h-[400px] rounded-xl shadow-lg overflow-hidden ring-1 ring-gray-300 dark:ring-gray-700">
+            <div id="stationMap" class="w-full h-full"></div>
+        </div>
+
+        <div class="flex justify-between items-center mt-6">
+            <a asp-action="Edit" asp-route-id="@Model.StationID"
+               class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition">Edit</a>
+            <a asp-action="Index"
+               class="text-indigo-500 hover:underline">Back to List</a>
+        </div>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    const lat = @Model.Lat;
+    const lon = @Model.Lon;
+
+    const map = L.map('stationMap').setView([lat, lon], 16);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+    }).addTo(map);
+
+    L.marker([lat, lon]).addTo(map)
+        .bindPopup(`<b>@Model.StationName</b><br>@Model.StationLine`)
+        .openPopup();
+</script>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ReadD2cMessages": {
+      "commandName": "Project",
+      "commandLineArgs": "-c \"Endpoint=sb://ihsuprodsgres021dednamespace.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=MRMonIa107HtJM0ccTZl6CfNMzfTH6Y4/AIoTD0fGAk=;EntityPath=iothub-ehub-it3681-00-57167206-863f4b9aec\""
+    }
+  }
+}

@@ -1,0 +1,1062 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<style>
+    .status-indicator {
+        animation: pulse 2s infinite;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .status-online {
+        background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+    }
+
+    .platform-card {
+        transition: all 0.3s ease;
+    }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+    @@keyframes slideUp {
+        from
+
+    {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.6s ease-out forwards;
+    }
+    @@keyframes scaleIn {
+        from
+
+    {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    }
+
+    .animate-scale-in {
+        animation: scaleIn 0.3s ease-out forwards;
+    }
+    /* Custom styles for the vertical line in alerts */
+    .alert-item-container {
+        /* This ensures the absolute line scales with its content height */
+        position: relative;
+        /* Adjust padding to control gap between text and line */
+        padding-right: 1rem; /* Adjust as needed */
+    }
+
+    .alert-vertical-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0; /* Align to the right edge of its parent */
+        width: 1px;
+        background-color: #9ca3af; /* gray-400 */
+    }
+
+    .swiper-slide {
+        height: auto;
+    }
+
+    /* Force vertical stacking on mobile for better readability */
+    @@media (max-width: 1023px) {
+        .slide-content
+
+    {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+    }
+
+    .chart-section {
+        width: 100% !important;
+    }
+
+    .stats-section {
+        width: 100% !important;
+    }
+
+    }
+</style>
+<div class="flex flex-col md:flex-row md:items-center w-full">
+    <!-- Left: Date / Time -->
+    <div class="text-sm text-gray-500 dark:text-gray-400 md:mr-auto mb-4 md:mb-0" id="currentDate"></div>
+
+    <!-- Right: Search Bar Container -->
+    <div class="flex justify-center w-full md:w-auto">
+        <div class="relative w-full max-w-2xl">
+            <input type="text"
+                   placeholder="Search MRT Station"
+                   id="stationSearch"
+                   oninput="filterStations(this.value)"
+                   autocomplete="off"
+                   class="w-full px-5 py-4 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-rose-500 dark:focus:border-pink-500 focus:ring-2 focus:ring-rose-300 dark:focus:ring-pink-600 transition-all duration-200 shadow-md dark:shadow-none" />
+
+            <div id="suggestionsBox"
+                 class="absolute z-50 w-full bg-white dark:bg-zinc-800 border border-gray-300 dark:border-gray-600 rounded-b-2xl shadow-lg mt-1 overflow-y-auto max-h-[300px] hidden">
+                <!-- Suggestions injected here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mainContent" class="content-transition">
+    <div class="max-w-7xl mx-auto px-5 py-7">
+
+        <!-- Station Status Section -->
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Left section: Station info + Gantry -->
+            <div class="flex-1">
+                <!-- Station Info -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Current Station Selected:</h2>
+                    <p class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-1" id="station">Ang Mo Kio</p>
+                    <div class="flex items-center">
+                        <span class="text-gray-600 dark:text-gray-300 mr-3">Station Status:</span>
+                        <div class="flex items-center" id="StationStatus">
+                            <div class="w-3 h-3 bg-green-500 rounded-full status-indicator mr-2" id="status-indicator"></div>
+                            <span class="text-green-600 dark:text-green-400 font-semibold" id="status-text">ONLINE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gantry Section - Now directly below station info -->
+                <div class="animate-slide-up" style="max-width:35rem;">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex space-x-2 flex-wrap" id="tap-indicator-block">
+      <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">1</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">2</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">3</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">4</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">5</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">6</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">7</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">8</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">9</div>
+    <div class="w-12 h-12 bg-gray-400 rounded-lg flex items-center justify-center text-white font-bold text-xl tap-indicator-block">10</div>
+
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-lg font-semibold text-gray-700 dark:text-gray-300">
+                        <span>IN</span>
+                        <span>OUT</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right section: Alerts -->
+            <div class="w-full lg:w-auto lg:min-w-[30rem]" style="max-width:30vw;">
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 h-fit">
+                    <h3 class="font-semibold text-yellow-800 dark:text-yellow-200 mb-2 flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                        Alerts:
+                    </h3>
+                    <div class="text-sm text-yellow-700 dark:text-yellow-300">
+                        <div class="space-y-4">
+                            <div class="flex">
+                                <div class="flex flex-col items-end pr-4 alert-item-container">
+                                    <span class="text-right whitespace-nowrap">24/5/2022</span>
+                                    <span class="text-right whitespace-nowrap">18:52</span>
+                                    <div class="alert-vertical-line"></div>
+                                </div>
+                                <div class="pl-4">
+                                    <p>Train Delayed at Choa Chu Kang</p>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div class="flex flex-col items-end pr-4 alert-item-container">
+                                    <span class="text-right whitespace-nowrap">25/5/2022</span>
+                                    <span class="text-right whitespace-nowrap">09:30</span>
+                                    <div class="alert-vertical-line"></div>
+                                </div>
+                                <div class="pl-4">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc orci mauris, euismod eget libero eu, luctus laoreet nisi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-gray-50 dark:bg-gray-900 p-4">
+        <!-- Main Container - Single Column Layout -->
+        <div class="max-w-7xl mx-auto space-y-8">
+
+            <!-- First Card: Chart Carousel -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 platform-card animate-slide-up">
+
+                <!-- Chart Navigation Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center space-x-2">
+                        <button id="prevBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </button>
+                        <span id="chartName" class="text-sm font-medium text-gray-700 dark:text-gray-300">Tap Count</span>
+                        <button id="nextBtn" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Swiper Container -->
+                <div class="swiper mySwiper w-full">
+                    <div class="swiper-wrapper">
+
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide">
+                            <div class="slide-content grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <!-- Chart Section: Takes 2/3 width on desktop -->
+                                <div class="chart-section lg:col-span-2">
+                                    <div class="chart-container">
+                                        <canvas id="carbonChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Stats Section: Takes 1/3 width on desktop -->
+                                <div class="stats-section lg:col-span-1">
+                                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 h-full flex items-center justify-center">
+                                        <div class="grid grid-cols-2 gap-6 w-full">
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">Total Taps</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s1n1">24.5 kg</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">Peak Taps</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s1n2">52</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">Average Tap</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s1n3">17.3</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">First Interval</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s1n4">6.1</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="swiper-slide">
+                            <div class="slide-content grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <!-- Chart Section: Takes 2/3 width on desktop -->
+                                <div class="chart-section lg:col-span-2">
+                                    <div class="chart-container">
+                                        <canvas id="trafficChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Stats Section: Takes 1/3 width on desktop -->
+                                <div class="stats-section lg:col-span-1">
+                                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 h-full flex items-center justify-center">
+                                        <div class="grid grid-cols-2 gap-6 w-full">
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">Total Taps</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s2n1">31.7 kg</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">Peak Taps</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s2n2">64</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">Average Tap</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s2n3">22.8</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p class="text-gray-600 dark:text-gray-300 font-medium text-sm">First Interval</p>
+                                                <p class="text-xl lg:text-2xl font-bold text-green-600 mt-2" id="s2n4">8.9</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Today</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="swiper-slide">
+                            <div class="slide-content grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                <!-- Chart Section -->
+                                <div class="chart-section lg:col-span-2">
+                                    <div class="chart-container p-6">
+                                        <canvas class="w-full h-full" id="HVAC"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Stats Panel -->
+                                <div class="stats-section lg:col-span-1">
+                                    <div class="bg-gray-100 dark:bg-gray-700 rounded-2xl shadow-md p-6 flex flex-col h-full justify-between transition-colors duration-300">
+
+                                        <!-- Title -->
+                                        <h2 class="text-2xl font-bold text-gray-800 dark:text-white text-center mb-4">HVAC Stats</h2>
+
+                                        <!-- Table -->
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm">
+                                                <thead class="text-left uppercase tracking-wide text-gray-500 dark:text-gray-400 border-b border-gray-300 dark:border-gray-700">
+                                                    <tr>
+                                                        <th class="pb-3">Variable</th>
+                                                        <th class="pb-3">Value</th>
+                                                        <th class="pb-3">Threshold</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="text-gray-700 dark:text-gray-200 divide-y divide-gray-300 dark:divide-gray-700">
+                                                    <tr class="hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
+                                                        <td class="py-2 font-medium">Temperature</td>
+                                                        <td id="hvacTemp">22°C</td>
+                                                        <td id="TTemp">22°C</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
+                                                        <td class="py-2 font-medium">Humidity</td>
+                                                        <td id="hvacHumidity">45%</td>
+                                                        <td id="THumidity">45%</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
+                                                        <td class="py-2 font-medium">PSI</td>
+                                                        <td id="hvacPsi">1013 hPa</td>
+                                                        <td id="TPsi">1013 hPa</td>
+                                                    </tr>
+                                                    <tr class="hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
+                                                        <td class="py-2 font-medium">Gas</td>
+                                                        <td id="hvacGasDetection">0 ppm</td>
+                                                        <td id="TGasDetection">0 ppm</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- CTA Button -->
+                                        <button onclick="sabotage()"
+                                                class="mt-6 w-full bg-rose-600 hover:bg-rose-700 dark:bg-pink-600 dark:hover:bg-pink-700 text-white font-semibold py-3 rounded-xl shadow-md transition-transform duration-200 hover:scale-105">
+                                            SABOTAGE
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Card: Next Section (Always Below) -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 platform-card animate-slide-up">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- Left Side: Video Stack -->
+                    <div class="space-y-6">
+                        <!-- OUT Video -->
+                        <div class="relative max-h-[200px] mx-auto">
+                            <!-- Label -->
+                            <div class="absolute -top-3 left-4
+                bg-gray-800 dark:bg-gray-200
+                text-white dark:text-gray-800
+                px-3 py-1 rounded text-sm font-medium z-10">
+                                OUT
+                            </div>
+
+                            <!-- Video Container -->
+                            <div class="bg-gray-100 dark:bg-gray-700
+                rounded-xl border-2 border-gray-300 dark:border-gray-600
+                overflow-hidden relative max-h-[200px]">
+                                <!-- Aspect ratio wrapper -->
+                                <div class="aspect-w-16 aspect-h-9 max-h-[360px]">
+                                    <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                        <source src="@ViewBag.Video1" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IN Video -->
+                        <div class="relative max-h-[200px] mx-auto">
+                            <!-- Label -->
+                            <div class="absolute -top-3 left-4 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 px-3 py-1 rounded text-sm font-medium z-10">
+                                IN
+                            </div>
+
+                            <!-- Video Container -->
+                            <div class="bg-gray-100 dark:bg-gray-700 rounded-xl border-2 border-gray-300 dark:border-gray-600 overflow-hidden relative max-h-[200px]">
+                                <!-- Aspect ratio wrapper -->
+                                <div class="aspect-w-16 aspect-h-9 max-h-[360px]">
+                                    <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+                                        <source src="@ViewBag.Video2" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Right Side: Map -->
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-6 border-2 border-gray-300 dark:border-gray-600 h-full min-h-[400px] flex items-center justify-center">
+                        <div id="stationMap" class="w-full h-full"></div>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+</div>
+
+<!-- Overlay for mobile -->
+<div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden lg:hidden"></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/date-fns"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@latest"></script>
+
+<script>
+    let map;
+    let marker;
+    let suggestedStationNames = []; 
+
+  
+    let carbonChart;
+    let trafficChart;
+    let HVAC;
+
+    function sabotage(){
+         fetch('/Home/Sabotage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        // Add any data you want to send
+          station: document.getElementById("station").textContent
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Sabotage result:', data);
+    })
+    .catch(error => {
+      console.error('Error during sabotage:', error);
+    });
+
+
+    }
+
+    function getLineClasses(lineName) {
+    const mapping = {
+    "EW": { Linename: "East-West Line", text: "green" },
+    "CG": { Linename: "Changi", text: "green" }, 
+    "NS": { Linename: "North-South Line", text: "red" },
+    "CC": { Linename: "Circle Line", text: "yellow" },
+    "DT": { Linename: "Downtown Line", text: "blue" },
+    "NE": { Linename: "North-East Line", text: "purple" },
+    "TE": { Linename: "Thomson-East Coast", text: "amber" }
+    };
+   
+    return mapping[lineName] || { Linename: "Unknown Line", text: "gray" };
+    }
+
+  
+    function initializeMap(lat, lon, stationName, stationLine) {
+    if (map) {
+
+    console.warn("Map already initialized. Skipping re-initialization.");
+    return;
+    }
+
+    map = L.map('stationMap').setView([lat, lon], 20);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19
+    }).addTo(map);
+
+    const { Linename } = getLineClasses(stationLine);
+    marker = L.marker([lat, lon]).addTo(map)
+    .bindPopup(`<b>${stationName}</b><br>${Linename}`)
+    .openPopup();
+
+    console.log("Map initialized:", map, "Marker initialized:", marker);
+    }
+
+  
+    function updateMapLocation(lat, lon, stationName, stationLine) {
+    if (!map || !marker) {
+    console.error("Map or marker not initialized. Cannot update location.");
+    return;
+    }
+
+    const newLatLng = new L.LatLng(lat, lon);
+
+    map.setView(newLatLng, 16);
+    marker.setLatLng(newLatLng); 
+
+    const { Linename } = getLineClasses(stationLine);
+    marker.setPopupContent(`<b>${stationName}</b><br>${Linename}`);
+    marker.openPopup(); 
+    }
+
+  
+    async function filterStations(query) {
+    const box = document.getElementById('suggestionsBox');
+    if (!query.trim()) {
+    box.classList.add('hidden');
+    box.innerHTML = '';
+    return;
+    }
+
+    try {
+    const response = await fetch(`/Home/Search?query=${encodeURIComponent(query)}`);
+
+    if (!response.ok) {
+    console.error('Server error:', response.statusText);
+    return;
+    }
+
+    const text = await response.text();
+
+    if (!text.trim()) {
+    console.warn('Empty response from server');
+    box.innerHTML = `<div class="px-4 py-2 text-gray-500 text-sm">No results found</div>`;
+    box.classList.remove('hidden');
+    return;
+    }
+
+    let data;
+    try {
+    data = JSON.parse(text);
+    } catch (e) {
+    console.error('Invalid JSON:', text);
+    return;
+    }
+
+    if (!data.length) {
+    box.innerHTML = `<div class="px-4 py-2 text-gray-500 text-sm">No results found</div>`;
+    box.classList.remove('hidden');
+    return;
+    }
+  suggestedStationNames = data.flatMap(group => group.stations);
+
+    const html = data.map(group => {
+    const { Linename, text: textColorClass } = getLineClasses(group.lineName); 
+    return `
+    <div class="font-extrabold px-4 py-2 text-xs bg-${textColorClass}-100 dark:bg-${textColorClass}-600 cursor-default select-none font-semibold sticky top-0 z-10">
+        ${Linename}
+    </div>
+    ${group.stations.map(name => `
+    <div class="px-4 py-2 hover:bg-${textColorClass}-200 dark:bg-${textColorClass}-500 text-sm cursor-pointer" onclick="selectStation('${name.replace(/'/g, " \\'")}')">
+        ${name}
+    </div>
+    `).join('')}
+    `;
+    }).join('');
+
+    box.innerHTML = html;
+    box.classList.remove('hidden');
+    } catch (err) {
+    console.error('Fetch error during search:', err);
+    }
+    }
+
+    function selectStation(stationName) {
+    document.getElementById("suggestionsBox").classList.add("hidden");
+    document.getElementById("station").textContent = stationName;
+   
+    fetchAndUpdateCharts();
+    }
+
+    async function fetchAndUpdateCharts() {
+    const selectedStationName = document.getElementById("station").textContent;
+
+    if (!selectedStationName) {
+    console.warn("No station selected. Cannot fetch data.");
+    return;
+    }
+
+    try {
+    const res = await fetch(`/Home/Data?station=${encodeURIComponent(selectedStationName)}`); // Encode for URL safety
+    if (!res.ok) {
+    throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const result = await res.json();
+    if (!result.success) {
+    console.error("API returned success: false", result);
+    return;
+    }
+
+    if (carbonChart && trafficChart && HVAC) {
+    carbonChart.data.datasets[0].data = result.data1;
+    carbonChart.update();
+
+    trafficChart.data.datasets[0].data = result.data2;
+    trafficChart.update();
+
+     HVAC.data.datasets[0].data = [result.hvacTemp, result.hvacHumidity , result.hvacPsi, result.hvacGasDetection];
+    HVAC.update();
+    } else {
+    console.log("Charts not yet initialized. Skipping chart update.");
+    }
+
+  
+    document.getElementById('s1n1').textContent = result.s1n1;
+    document.getElementById('s1n2').textContent = result.s1n2;
+    document.getElementById('s1n3').textContent = result.s1n3;
+    document.getElementById('s1n4').textContent = result.s1n4;
+
+    document.getElementById('s2n1').textContent = result.s2n1;
+    document.getElementById('s2n2').textContent = result.s2n2;
+    document.getElementById('s2n3').textContent = result.s2n3;
+    document.getElementById('s2n4').textContent = result.s2n4;
+
+        document.getElementById("hvacTemp").textContent = result.hvacTemp + "°C";
+      document.getElementById("hvacHumidity").textContent = result.hvacHumidity + "%";
+      document.getElementById("hvacPsi").textContent = result.hvacPsi + "hPa";
+      document.getElementById("hvacGasDetection").textContent = result.hvacGasDetection + "ppm";
+
+        document.getElementById("TTemp").textContent = result.tTemp + "°C";
+        document.getElementById("THumidity").textContent = result.tHumidity + "%";
+        document.getElementById("TPsi").textContent = result.tPsi + "hPa";
+        document.getElementById("TGasDetection").textContent = result.tGasDetection + "ppm";
+
+
+    const stationContainer = document.getElementById("StationStatus");
+    const statusIndicator = stationContainer.querySelector('.status-indicator');
+    const statusText = document.getElementById('status-text');
+
+    if (result.isActive) {
+    statusIndicator.classList.remove('bg-red-500', 'bg-gray-400');
+    statusIndicator.classList.add('bg-green-500');
+    statusText.classList.remove('text-red-600', 'dark:text-red-400', 'text-gray-600', 'dark:text-gray-400');
+    statusText.classList.add('text-green-600', 'dark:text-green-400');
+    statusText.textContent = 'ONLINE';
+    } else {
+    statusIndicator.classList.remove('bg-green-500', 'bg-gray-400');
+    statusIndicator.classList.add('bg-red-500');
+    statusText.classList.remove('text-green-600', 'dark:text-green-400', 'text-gray-600', 'dark:text-gray-400');
+    statusText.classList.add('text-red-600', 'dark:text-red-400');
+    statusText.textContent = 'OFFLINE';
+    }
+
+   
+    const currentTapRatio = result.tapRatio;
+    const indicatorBlocks = document.querySelectorAll('.tap-indicator-block');
+    let ratio = parseFloat(currentTapRatio);
+
+    if (isNaN(ratio) || ratio < 1 || ratio > 10) {
+    console.warn("Invalid tapRatio provided. Expected a number between 1 and 10. Defaulting all blocks to grey.");
+    indicatorBlocks.forEach(block => {
+    block.classList.remove('bg-green-500', 'bg-red-500', 'text-green-600', 'dark:text-green-400', 'text-red-600', 'dark:text-red-400');
+    block.classList.add('bg-gray-400', 'dark:bg-gray-600');
+    });
+    return; 
+    }
+
+    const activeNumber = Math.round(ratio);
+
+    indicatorBlocks.forEach(block => {
+    const blockNumber = parseInt(block.textContent);
+
+    
+    block.classList.remove('bg-green-500', 'bg-red-500', 'bg-gray-400', 'dark:bg-gray-600');
+    block.classList.remove('text-green-600', 'dark:text-green-400', 'text-red-600', 'dark:text-red-400');
+
+    if (blockNumber <= activeNumber) {
+   
+
+    block.classList.add('bg-green-500');
+    } else {
+    block.classList.add('bg-red-500');
+    }
+    });
+
+    
+    updateMapLocation(result.lat, result.lon, selectedStationName, result.stationLine);
+
+    } catch (error) {
+    console.error('Error fetching and updating charts:', error);
+    }
+    }
+
+    
+    class LayoutManager2 {
+    constructor() {
+    this.init();
+    }
+
+    init() {
+
+
+   
+    const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    });
+
+    document.getElementById("prevBtn").onclick = () => swiper.slidePrev();
+    document.getElementById("nextBtn").onclick = () => swiper.slideNext();
+
+    const chartNames = ["Tap Count", "Fare prices", "HVAC"];
+
+  
+    swiper.on("slideChange", () => {
+    const realIndex = swiper.realIndex;
+    document.getElementById("chartName").textContent = chartNames[realIndex];
+    });
+
+    
+    document.getElementById("stationSearch").addEventListener("input", function() {
+    filterStations(this.value);
+    });
+
+  
+    document.addEventListener('click', function(e) {
+    const box = document.getElementById('suggestionsBox');
+    if (!document.getElementById('stationSearch').contains(e.target) && !box.contains(e.target)) {
+    box.classList.add('hidden');
+    }
+    });
+
+   
+    document.getElementById("stationSearch").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+    e.preventDefault(); 
+    const value = this.value.trim();
+    if (suggestedStationNames.includes(value)) {
+    selectStation(value);
+    } else {
+    alert("Please select a valid station from the suggestions.");
+    }
+    }
+    });
+
+    this.initializeCharts(); 
+    this.updateDateTime();
+    setInterval(() => this.updateDateTime(), 100);
+    }
+
+    initializeCharts() {
+   
+    if (window.carbonChart && typeof window.carbonChart.destroy === 'function') {
+    window.carbonChart.destroy();
+    }
+    if (window.trafficChart && typeof window.trafficChart.destroy === 'function') {
+    window.trafficChart.destroy();
+    }
+      if (window.HVAC && typeof window.HVAC.destroy === 'function') {
+      window.HVAC.destroy();
+      }
+
+ 
+    fetch(`/Home/data?station=${document.getElementById('station').textContent}`, {
+    method: "GET",
+    headers: { "Accept": "application/json" }
+    })
+    .then(response => {
+    if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+    })
+    .then(result => {
+    if (!result.success) {
+    console.error("Initial API call returned success: false", result);
+    return;
+    }
+
+    console.log(result);
+    document.getElementById("s1n1").textContent = result.s1n1;
+    document.getElementById("s1n2").textContent = result.s1n2;
+    document.getElementById("s1n3").textContent = result.s1n3;
+    document.getElementById("s1n4").textContent = result.s1n4;
+    document.getElementById('s2n1').textContent = result.s2n1;
+    document.getElementById('s2n2').textContent = result.s2n2;
+    document.getElementById('s2n3').textContent = result.s2n3;
+    document.getElementById('s2n4').textContent = result.s2n4;
+
+    //HVAC Stats
+    document.getElementById("hvacTemp").textContent = result.hvacTemp + "°C";
+    document.getElementById("hvacHumidity").textContent = result.hvacHumidity + "%";
+    document.getElementById("hvacPsi").textContent = result.hvacPsi + "hPa";
+    document.getElementById("hvacGasDetection").textContent = result.hvacGasDetection + "ppm";
+
+    document.getElementById("TTemp").textContent = result.tTemp + "°C";
+    document.getElementById("THumidity").textContent = result.tHumidity + "%";
+    document.getElementById("TPsi").textContent = result.tPsi + "hPa";
+    document.getElementById("TGasDetection").textContent = result.tGasDetection + "ppm";
+
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const textColor = isDark ? '#e5e7eb' : '#374151';
+    const gridColor = isDark ? '#374151' : '#e5e7eb';
+
+    
+    const carbonCtx = document.getElementById('carbonChart').getContext('2d');
+    carbonChart = new Chart(carbonCtx, {
+    type: 'line',
+    data: {
+    datasets: [{
+    label: 'Taps',
+    data: result.data1,
+    borderColor: '#10b981',
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+    fill: true,
+    tension: 0.4,
+    pointRadius: 0,
+    pointHoverRadius: 4,
+    borderWidth: 2
+    }]
+    },
+    options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+    x: {
+    type: 'time',
+    time: {
+    unit: 'minute',
+    stepSize: 1,
+    displayFormats: { minute: 'HH:mm' },
+    tooltipFormat: 'HH:mm:ss'
+    },
+    min: new Date().setHours(0, 0, 0, 0),
+    max: new Date().setHours(23, 59, 59, 999),
+    ticks: { color: textColor, autoSkip: true, maxTicksLimit: 288 },
+    grid: { color: gridColor, borderColor: gridColor }
+    },
+    y: {
+    display: true,
+    min: 0,
+    max: 10,
+    ticks: { color: textColor },
+    grid: { color: gridColor, borderColor: gridColor }
+    }
+    },
+    interaction: { intersect: false, mode: 'index' },
+    animation: { duration: 20, easing: 'easeInOutQuart' }
+    }
+    });
+
+
+   HVAC = new Chart(document.getElementById('HVAC').getContext('2d'), {
+                    type: 'bar',
+      data: {
+        labels: ['Temperature', 'Humidity', 'PSI', 'Gas'],
+        datasets: [
+          {
+            label: 'Measurements',
+              data: [result.hvacTemp, result.hvacHumidity , result.hvacPsi, result.hvacGasDetection],
+            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              thresholdA: {
+                type: 'line',
+                yMin: result.tTemp,
+                  yMax: result.tTemp,
+                xMin: -0.4,
+                xMax: 0.4,
+                  borderColor:'#E11D48',
+                  borderWidth: 2,
+                    borderDash: [4, 5]
+              },
+              thresholdB: {
+                type: 'line',
+                  yMin: result.tHumidity,
+                  yMax: result.tHumidity,
+                xMin: 0.6,
+                xMax: 1.4,
+                  borderColor:'#E11D48',
+                borderWidth: 2,
+                  borderDash: [4, 5]
+              },
+              thresholdC: {
+                type: 'line',
+                  yMin: result.tPsi,
+                  yMax: result.tPsi,
+                xMin: 1.6,
+                xMax: 2.4,
+                  borderColor: '#E11D48',
+                  borderWidth: 2,
+                    borderDash: [4, 5]
+              },
+              thresholdD: {
+                type: 'line',
+                  yMin: result.tGasDetection,
+                  yMax: result.tGasDetection,
+                xMin: 2.6,
+                xMax: 3.4,
+                  borderColor: '#E11D48',
+                  borderWidth: 2,
+                    borderDash: [4, 5]
+              }
+             
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      },
+      plugins: [Chart.registry.getPlugin('annotation')]
+    });
+
+    const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+    trafficChart = new Chart(trafficCtx, { 
+    type: 'line',
+    data: {
+    datasets: [{
+    label: 'Fare Collected',
+    data: result.data2,
+    borderColor: '#10b981',
+    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+    fill: true,
+    tension: 0.4,
+    pointRadius: 0,
+    pointHoverRadius: 4,
+    borderWidth: 2
+    }]
+    },
+    options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+    x: {
+    type: 'time',
+    time: {
+    unit: 'minute',
+    stepSize: 1,
+    displayFormats: { minute: 'HH:mm' },
+    tooltipFormat: 'HH:mm:ss'
+    },
+    min: new Date().setHours(0, 0, 0, 0),
+    max: new Date().setHours(23, 59, 59, 999),
+    ticks: { color: textColor, autoSkip: true, maxTicksLimit: 288 },
+    grid: { color: gridColor, borderColor: gridColor }
+    },
+    y: {
+    display: true,
+    min: 0,
+    max: 10,
+    ticks: { color: textColor },
+    grid: { color: gridColor, borderColor: gridColor }
+    }
+    },
+    interaction: { intersect: false, mode: 'index' },
+    animation: { duration: 20, easing: 'easeInOutQuart' }
+    }
+    });
+
+    
+    initializeMap(result.lat, result.lon, document.getElementById('station').textContent, result.stationLine);
+
+    })
+    .catch(error => {
+    console.error('Error in initial chart data fetch:', error);
+    });
+    }
+
+    updateDateTime() {
+    const today = new Date();
+    const dateOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+    const weekdayOptions = { weekday: 'short' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+
+    const formattedDatePart = new Intl.DateTimeFormat('en-GB', dateOptions).format(today);
+    const formattedWeekdayPart = new Intl.DateTimeFormat('en-US', weekdayOptions).format(today);
+    const formattedTimePart = new Intl.DateTimeFormat('en-US', timeOptions).format(today);
+    const finalFormattedString = `${formattedDatePart}, ${formattedWeekdayPart} ${formattedTimePart}`;
+
+    if (document.getElementById('currentDate')) {
+    document.getElementById('currentDate').textContent = ">> " + finalFormattedString;
+    }
+    }
+    }
+
+   
+    document.addEventListener('DOMContentLoaded', () => {
+    new LayoutManager2();
+ 
+    setInterval(() => fetchAndUpdateCharts(), 5000);
+    });
+    </script>
+
