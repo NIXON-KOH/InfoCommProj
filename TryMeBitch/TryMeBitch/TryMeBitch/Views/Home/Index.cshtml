@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -632,7 +632,7 @@
     function selectStation(stationName) {
     document.getElementById("suggestionsBox").classList.add("hidden");
     document.getElementById("station").textContent = stationName;
-   
+         localStorage.setItem('selectedStation', stationName);
     fetchAndUpdateCharts();
     }
 
@@ -817,7 +817,7 @@
       window.HVAC.destroy();
       }
 
- 
+        document.getElementById('station').textContent = localStorage.getItem('selectedStation') || 'Ang Mo Kio';
     fetch(`/Home/data?station=${document.getElementById('station').textContent}`, {
     method: "GET",
     headers: { "Accept": "application/json" }
