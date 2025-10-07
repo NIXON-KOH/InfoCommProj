@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TryMeBitch.Models.User>
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<div class="max-w-6xl mx-auto my-12 p-6
+            bg-white dark:bg-zinc-800
+            rounded-lg shadow-md
+            transition-colors duration-200">
+
+    <h1 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 text-center">All Users</h1>
+
+    <table class="min-w-full border border-gray-300 dark:border-zinc-600 divide-y divide-gray-200 dark:divide-zinc-600">
+        <thead class="bg-gray-100 dark:bg-zinc-700">
+            <tr>
+                <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Email</th>
+                <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Phone</th>
+                <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Created At</th>
+                <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-gray-200 dark:divide-zinc-700">
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-100">@user.Email</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-100">@user.PhoneNumber</td>
+                    <td class="px-4 py-2 text-gray-800 dark:text-gray-100">@user.CreatedAt.ToString("yyyy-MM-dd")</td>
+                    <td class="px-4 py-2 space-x-2">
+                        <a class="text-blue-600 dark:text-blue-400 hover:underline" asp-action="Details" asp-route-id="@user.Id">Details</a>
+                        <a class="text-green-600 dark:text-green-400 hover:underline" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                        <a class="text-red-600 dark:text-red-400 hover:underline" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,134 @@
+﻿@model TryMeBitch.Models.TelemetryViewModel
+@{
+    ViewData["Title"] = "Telemetry Dashboard";
+}
+
+<div class="space-y-6 p-6">
+    <h1 class="text-2xl font-semibold text-zinc-800 dark:text-zinc-100">Telemetry Dashboard</h1>
+
+    @if (!Model.TrainLocations.Any()
+    && !Model.PowerUsages.Any()
+    && !Model.LoadWeights.Any()
+    && !Model.DepotEnergySlots.Any())
+    {
+        <div class="rounded-lg bg-blue-50 dark:bg-blue-900 p-4 text-blue-800 dark:text-blue-200">
+            <em>No telemetry data available yet.</em>
+        </div>
+    }
+    else
+    {
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- GPS Card -->
+            <div class="bg-white dark:bg-zinc-800 shadow rounded-lg overflow-hidden">
+                <div class="px-4 py-2 border-b border-zinc-200 dark:border-zinc-700 font-medium text-zinc-700 dark:text-zinc-200">
+                    GPS &amp; Live Locations
+                </div>
+                <div class="overflow-auto">
+                    <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                        <thead class="bg-zinc-50 dark:bg-zinc-700">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-sm font-semibold">Time</th>
+                                <th class="px-3 py-2 text-right text-sm font-semibold">Lat</th>
+                                <th class="px-3 py-2 text-right text-sm font-semibold">Lon</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                            @foreach (var loc in Model.TrainLocations)
+                            {
+                                <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                                    <td class="px-3 py-1 text-sm">@loc.Timestamp.ToString("HH:mm:ss")</td>
+                                    <td class="px-3 py-1 text-sm text-right">@loc.Latitude.ToString("F4")</td>
+                                    <td class="px-3 py-1 text-sm text-right">@loc.Longitude.ToString("F4")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Power Card -->
+            <div class="bg-white dark:bg-zinc-800 shadow rounded-lg overflow-hidden">
+                <div class="px-4 py-2 border-b border-zinc-200 dark:border-zinc-700 font-medium text-zinc-700 dark:text-zinc-200">
+                    Power Usage
+                </div>
+                <div class="overflow-auto">
+                    <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                        <thead class="bg-zinc-50 dark:bg-zinc-700">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-sm font-semibold">Time</th>
+                                <th class="px-3 py-2 text-left text-sm font-semibold">Source</th>
+                                <th class="px-3 py-2 text-right text-sm font-semibold">Watts</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                            @foreach (var pu in Model.PowerUsages)
+                            {
+                                <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                                    <td class="px-3 py-1 text-sm">@pu.Timestamp.ToString("HH:mm:ss")</td>
+                                    <td class="px-3 py-1 text-sm">@pu.Source</td>
+                                    <td class="px-3 py-1 text-sm text-right">@pu.Watts.ToString("F0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Load Card -->
+            <div class="bg-white dark:bg-zinc-800 shadow rounded-lg overflow-hidden">
+                <div class="px-4 py-2 border-b border-zinc-200 dark:border-zinc-700 font-medium text-zinc-700 dark:text-zinc-200">
+                    Load Weight
+                </div>
+                <div class="overflow-auto">
+                    <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                        <thead class="bg-zinc-50 dark:bg-zinc-700">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-sm font-semibold">Time</th>
+                                <th class="px-3 py-2 text-right text-sm font-semibold">kg</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                            @foreach (var lw in Model.LoadWeights)
+                            {
+                                <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                                    <td class="px-3 py-1 text-sm">@lw.Timestamp.ToString("HH:mm:ss")</td>
+                                    <td class="px-3 py-1 text-sm text-right">@lw.Kilograms.ToString("F0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Depot Slot Card -->
+            <div class="bg-white dark:bg-zinc-800 shadow rounded-lg overflow-hidden">
+                <div class="px-4 py-2 border-b border-zinc-200 dark:border-zinc-700 font-medium text-zinc-700 dark:text-zinc-200">
+                    Depot Slot Energy
+                </div>
+                <div class="overflow-auto">
+                    <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                        <thead class="bg-zinc-50 dark:bg-zinc-700">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-sm font-semibold">Time</th>
+                                <th class="px-3 py-2 text-left text-sm font-semibold">Bay</th>
+                                <th class="px-3 py-2 text-right text-sm font-semibold">Watts</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                            @foreach (var ds in Model.DepotEnergySlots)
+                            {
+                                <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                                    <td class="px-3 py-1 text-sm">@ds.Timestamp.ToString("HH:mm:ss")</td>
+                                    <td class="px-3 py-1 text-sm">@ds.BayId</td>
+                                    <td class="px-3 py-1 text-sm text-right">@ds.Watts.ToString("F0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>

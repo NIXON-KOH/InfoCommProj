@@ -1,0 +1,483 @@
+﻿@model TryMeBitch.Controllers.IssuesController.IssueDetailsViewModel
+
+@{
+    ViewData["Title"] = "Issue Details";
+    Layout = "_Layout";
+}
+<style>
+    /* Custom scrollbar for timeline container if needed */
+    .flow-root {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .flow-root::-webkit-scrollbar {
+    width: 6px;
+    }
+
+    .flow-root::-webkit-scrollbar-track {
+    background: transparent;
+    }
+
+    .flow-root::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 3px;
+    }
+
+    .dark .flow-root::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    }
+</style>
+<div class="px-6 py-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Issue Details</h1>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a asp-action="Edit" asp-route-id="@Model.Issue.id"
+                class="inline-flex items-center px-4 py-2 bg-amber-600 hover:bg-amber-700 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Edit Issue
+                </a>
+                <a asp-action="Index"
+                class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Issue Details -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Issue Information Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800">
+                    <h2 class="text-xl font-semibold text-white">@Model.Issue.title</h2>
+                    <p class="text-blue-100 text-sm mt-1">Issue | @Model.Issue.id</p>
+                </div>
+
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Author Info -->
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-semibold">
+                                    @Model.Issue.Author.Substring(0, Math.Min(2, Model.Issue.Author.Length)).ToUpper()
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Author</p>
+                                <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">@Model.Issue.Author</p>
+                            </div>
+                        </div>
+
+                        <!-- Station Info -->
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="h-12 w-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Station</p>
+                                <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">@Model.Issue.station</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status and Severity Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Severity -->
+                        <div class="text-center">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Severity</p>
+                            @if (Model.Issue.Severity == "Critical")
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400">
+                                    <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Critical
+                                </span>
+                            }
+                            else if (Model.Issue.Severity == "High")
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400">
+                                    <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    High
+                                </span>
+                            }
+                            else if (Model.Issue.Severity == "Medium")
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
+                                    <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Medium
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+                                    <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Low
+                                </span>
+                            }
+                        </div>
+
+                        <!-- Status -->
+                        <div class="text-center">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Status</p>
+                            @if (Model.Issue.status == "Open")
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+                                    <div class="w-2 h-2 bg-blue-400 rounded-full mr-1.5"></div>
+                                    Open
+                                </span>
+                            }
+                            else if (Model.Issue.status == "In Progress")
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
+                                    <div class="w-2 h-2 bg-yellow-400 rounded-full mr-1.5 animate-pulse"></div>
+                                    In Progress
+                                </span>
+                            }
+                            else if (Model.Issue.status == "Resolved")
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+                                    <div class="w-2 h-2 bg-green-400 rounded-full mr-1.5"></div>
+                                    Resolved
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                    <div class="w-2 h-2 bg-gray-400 rounded-full mr-1.5"></div>
+                                    Closed
+                                </span>
+                            }
+                        </div>
+
+                        <!-- Created Date -->
+                        <div class="text-center">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Created</p>
+                            <div class="text-sm text-gray-700 dark:text-gray-300">
+                                <div class="font-semibold">@Model.Issue.timestamp.ToString("MMM dd, yyyy")</div>
+                                <div class="text-xs">@Model.Issue.timestamp.ToString("HH:mm")</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Description</h3>
+                        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">@Model.Issue.summary</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline & Activity -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Activity Timeline
+                    </h3>
+                </div>
+
+                <div class="p-6">
+                    <div class="flow-root">
+                        <ul class="space-y-4">
+                            @{
+                                var allEntries = Model.Comments.Concat<dynamic>(Model.Timelines).OrderByDescending(e => e.timestamp).ToList();
+                                var entryCount = allEntries.Count();
+                            }
+                            @for (int i = 0; i < entryCount; i++)
+                            {
+                                var entry = allEntries[i];
+                                var isLast = i == entryCount - 1;
+                                var isComment = entry.GetType().Name.Contains("comment");
+                                <li class="@(isComment ? "ml-4" : "")">
+                                    <div class="relative @(!isLast ? "pb-4" : "")">
+                                        @if (!isLast && !isComment)
+                                        {
+                                            <span class="absolute top-10 left-5 -ml-px h-full w-0.5 bg-blue-200 dark:bg-blue-800" aria-hidden="true"></span>
+                                        }
+
+                                        @if (isComment)
+                                        {
+                                            <!-- Comment Entry - Smaller, Lighter -->
+                                            <div class="relative flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700/30 rounded-lg border border-gray-200 dark:border-gray-600/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors duration-150">
+                                                <!-- Small Comment Icon -->
+                                                <div class="flex-shrink-0">
+                                                    <div class="h-6 w-6 rounded-full bg-gray-400 dark:bg-gray-500 flex items-center justify-center">
+                                                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Comment Content -->
+                                                <div class="min-w-0 flex-1">
+                                                    <div class="flex items-center justify-between mb-1">
+                                                        <div class="flex items-center space-x-2">
+                                                            <span class="text-xs font-medium text-gray-700 dark:text-gray-300">@entry.Author</span>
+                                                            <span class="text-xs text-gray-400 dark:text-gray-500">•</span>
+                                                        </div>
+                                                        <time class="text-xs text-gray-400 dark:text-gray-500" datetime="@entry.timestamp.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                                            @entry.timestamp.ToString("MMM dd, HH:mm")
+                                                        </time>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">@entry.content</p>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="relative flex space-x-4">
+                                                <div class="flex-shrink-0">
+                                                    <div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-gray-700 flex items-center justify-center ring-4 ring-white dark:ring-gray-800 shadow-lg">
+                                                        <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+
+                                                <div class="min-w-0 flex-1">
+                                                    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+                                                        <div class="flex items-center justify-between mb-2">
+                                                            <div class="flex items-center space-x-2">
+                                                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700/50 dark:text-gray-200">
+                                                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                                                    </svg>
+                                                                    System Event
+                                                                </span>
+                                                            </div>
+
+                                                            <time class="text-xs text-gray-500 dark:text-gray-400 font-medium" datetime="@entry.timestamp.ToString("yyyy-MM-ddTHH:mm:ss")">
+                                                                @entry.timestamp.ToString("MMM dd, yyyy HH:mm")
+                                                            </time>
+                                                        </div>
+
+                                                        <div class="mt-3">
+                                                            <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">@entry.content</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+
+                        @if (entryCount == 0)
+                        {
+                            <!-- Empty State -->
+                            <div class="text-center py-12">
+                                <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <h3 class="mt-4 text-sm font-medium text-gray-900 dark:text-gray-100">No activity yet</h3>
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Timeline events and comments will appear here as they're added.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            <!-- Quick Stats Card -->
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="px-6 py-4 bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800">
+                    <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-400 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                        Quick Stats
+                    </h3>
+                </div>
+
+                <div class="p-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Total Comments</span>
+                            <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">@Model.Comments.Count()</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Timeline Events</span>
+                            <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">@Model.Timelines.Count()</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Days Open</span>
+                            <span class="text-lg font-semibold text-gray-900 dark:text-gray-100">@((DateTime.Now - Model.Issue.timestamp).Days)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Last Activity</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                @{
+                                    var lastActivity = allEntries.FirstOrDefault();
+                                    if (lastActivity != null)
+                                    {
+                                        <span>@lastActivity.timestamp.ToString("MMM dd")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>No activity</span>
+                                    }
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Comment Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="px-6 py-4 bg-green-50 dark:bg-green-900/20 border-b border-green-200 dark:border-green-800">
+                    <h3 class="text-lg font-semibold text-green-800 dark:text-green-400 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Add Comment
+                    </h3>
+                </div>
+
+                <div class="p-6">
+                    <form id="commentForm" asp-action="AddComment" asp-route-id="@Model.Issue.id" method="post">
+                        <div class="space-y-4">
+                            <input type="hidden" name="issueId" value="@Model.Issue.id" />
+                            <input type="hidden" name="station" value="@Model.Issue.station" />
+
+                            <div>
+                                <label for="commentContent" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                    Comment <span class="text-red-500">*</span>
+                                </label>
+                                <textarea id="commentContent" name="content" rows="4" required
+                                placeholder="Add your comment or update..."
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 resize-vertical"></textarea>
+                            </div>
+                            @if (Model.Issue.status == "Closed")
+                            {
+                                <div class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-lg">
+                                    Issue has been closed
+                                </div>
+                            }
+                            else
+                            {
+                                <button type="submit"
+                                        class="w-full inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                    </svg>
+                                    Post Comment
+                                </button>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+       
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const commentForm = document.getElementById('commentForm');
+
+        commentForm.addEventListener('submit', function(e) {
+
+            const formData = new FormData(this);
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = `
+                <svg class="w-4 h-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Posting...
+            `;
+
+            // Here you would normally submit to your controller
+            // For demo purposes, we'll simulate a successful submission
+            setTimeout(() => {
+                // Reset form
+                this.reset();
+
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'mb-4 p-4 bg-green-100 dark:bg-green-900/20 border border-green-300 dark:border-green-700 rounded-lg';
+                successMessage.innerHTML = `
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-green-600 dark:text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-green-800 dark:text-green-200 font-medium">Comment posted successfully!</span>
+                    </div>
+                `;
+
+                commentForm.parentNode.insertBefore(successMessage, commentForm);
+
+                // Remove success message after 3 seconds
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 3000);
+
+                // Restore button
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+
+                // In a real application, you would reload the page or update the timeline
+                // window.location.reload();
+
+            }, 1000);
+        });
+
+        // Auto-resize textarea
+        const textarea = document.getElementById('commentContent');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+
+        // Form validation
+        const requiredFields = commentForm.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+            field.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.classList.add('border-red-500', 'focus:ring-red-500');
+                    this.classList.remove('border-gray-300', 'dark:border-gray-600', 'focus:ring-green-500');
+                } else {
+                    this.classList.remove('border-red-500', 'focus:ring-red-500');
+                    this.classList.add('border-gray-300', 'dark:border-gray-600', 'focus:ring-green-500');
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,119 @@
+﻿@model TryMeBitch.Models.Joel_Train
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Create Train";
+}
+
+<div class="max-w-xl mx-auto my-12 p-6
+            bg-white dark:bg-zinc-800
+            rounded-lg shadow-md
+            transition-colors duration-200">
+    <h1 class="text-3xl font-semibold
+             text-gray-800 dark:text-gray-100
+             mb-6 text-center">
+        Create Train
+    </h1>
+
+    <form asp-action="Create" class="space-y-6">
+        <!-- Train ID -->
+        @Html.AntiForgeryToken()
+
+        <div>
+            <label asp-for="TrainId" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"></label>
+            <input asp-for="TrainId"
+                   class="block w-full
+                    bg-white dark:bg-zinc-700
+                    border border-gray-300 dark:border-zinc-600
+                    text-gray-900 dark:text-gray-100
+                    rounded-lg
+                    px-3 py-2
+                    focus:outline-none focus:ring-2 focus:ring-pink-500
+                    transition-colors duration-200" />
+            <span asp-validation-for="TrainId" class="text-red-600 text-sm mt-1 block"></span>
+        </div>
+
+        <!-- Name -->
+        <div>
+            <label asp-for="Name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"></label>
+            <input asp-for="Name"
+                   class="block w-full
+                    bg-white dark:bg-zinc-700
+                    border border-gray-300 dark:border-zinc-600
+                    text-gray-900 dark:text-gray-100
+                    rounded-lg
+                    px-3 py-2
+                    focus:outline-none focus:ring-2 focus:ring-pink-500
+                    transition-colors duration-200" />
+            <span asp-validation-for="Name" class="text-red-600 text-sm mt-1 block"></span>
+        </div>
+
+        <!-- Number of Carriages -->
+        <div>
+            <label asp-for="NumCarriages" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"></label>
+            <input asp-for="NumCarriages" type="number" min="1" max="20"
+                   class="block w-full
+                    bg-white dark:bg-zinc-700
+                    border border-gray-300 dark:border-zinc-600
+                    text-gray-900 dark:text-gray-100
+                    rounded-lg
+                    px-3 py-2
+                    focus:outline-none focus:ring-2 focus:ring-pink-500
+                    transition-colors duration-200" />
+            <span asp-validation-for="NumCarriages" class="text-red-600 text-sm mt-1 block"></span>
+        </div>
+
+        <div>
+            <label asp-for="Line" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"></label>
+            <select asp-for="Line" asp-items="ViewBag.Lines"
+                    class="block w-full bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-colors duration-200">
+            </select>
+            <span asp-validation-for="Line" class="text-red-600 text-sm mt-1 block"></span>
+        </div>
+
+        <div>
+            <label asp-for="Status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"></label>
+            <select asp-for="Status" asp-items="ViewBag.Statuses"
+                    class="block w-full bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 transition-colors duration-200">
+            </select>
+            <span asp-validation-for="Status" class="text-red-600 text-sm mt-1 block"></span>
+        </div>
+
+
+
+        <!-- Active Checkbox -->
+        <div class="flex items-center">
+            <input asp-for="IsActive" type="checkbox"
+                   class="h-5 w-5
+                    bg-white dark:bg-zinc-700
+                    border border-gray-300 dark:border-zinc-600
+                    rounded text-pink-600
+                    focus:ring-pink-500
+                    transition-colors duration-200" />
+            <label asp-for="IsActive" class="ml-2 block text-sm text-gray-700 dark:text-gray-300"></label>
+        </div>
+
+
+
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-4 pt-4 border-t border-gray-200 dark:border-zinc-700">
+            <a asp-action="Index"
+               class="px-4 py-2
+                bg-gray-200 dark:bg-zinc-700
+                text-gray-800 dark:text-gray-200
+                rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-600
+                transition-colors duration-200">
+                Back to List
+            </a>
+            <button type="submit"
+                    class="px-6 py-2
+                     bg-pink-600 dark:bg-pink-500
+                     text-white
+                     rounded-lg hover:bg-pink-700 dark:hover:bg-pink-400
+                     transition-colors duration-200">
+                Create
+            </button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

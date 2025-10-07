@@ -1,0 +1,27 @@
+﻿{
+  "Areas": [
+    {
+      "Name": "Exit",
+      "Shape": "polygon",
+      "Points": [
+        [ 300, 50 ],
+        [ 360, 50 ],
+        [ 350, 400 ],
+        [ 46, 400 ]
+      ],
+      "Threshold": 0.5
+    },
+    {
+      "Name": "Entrance",
+      "Shape": "polygon",
+      "Points": [
+        [ 400, 45 ],
+        [ 460, 45 ],
+        [ 690, 400 ],
+        [ 400, 400 ]
+
+      ],
+      "Threshold": 0.5
+    }
+  ]
+}

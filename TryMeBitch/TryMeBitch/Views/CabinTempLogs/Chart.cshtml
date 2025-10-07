@@ -1,0 +1,71 @@
+﻿@model IEnumerable<dynamic>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Cabin Temperature Chart";
+}
+
+
+
+
+<div class="max-w-4xl mx-auto my-12 p-6 bg-white dark:bg-zinc-800 rounded-lg shadow">
+    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+        Cabin Temperature Over Time
+    </h1>
+    <form asp-action="Chart" method="get" class="mb-4 flex items-center space-x-2">
+        <label for="trainId" class="text-sm font-medium text-gray-700 dark:text-gray-300">Train:</label>
+        <select id="trainId" name="trainId" asp-items="ViewBag.Trains"
+                class="bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600
+               text-gray-800 dark:text-gray-100 rounded-lg px-3 py-1
+               focus:outline-none focus:ring-2 focus:ring-pink-500">
+            <option value="">All</option>
+        </select>
+        <button type="submit"
+                class="px-4 py-1 bg-pink-600 hover:bg-pink-700 text-white rounded-lg">
+            Filter
+        </button>
+        <a asp-action="Index"
+           asp-route-trainId="@(ViewBag.SelectedTrain ?? "")"
+           class="ml-auto px-4 py-1 bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-600">
+            ← Back to List
+        </a>
+    </form>
+   
+    <div class="relative w-full h-64">
+        <canvas id="tempChart" class="absolute inset-0 w-full h-full"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const raw = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
+        const labels = raw.map(r => new Date(r.Timestamp).toLocaleTimeString());
+        const data = raw.map(r => r.Temperature);
+
+        new Chart(document.getElementById('tempChart'), {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    data,
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59,130,246,0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 3
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Time' } },
+                    y: { title: { display: true, text: '°C' } }
+                }
+            }
+        });
+    </script>
+}
+
+}

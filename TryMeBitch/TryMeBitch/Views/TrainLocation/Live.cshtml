@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Live Train Location";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+}
+
+<div class="p-6 max-w-7xl mx-auto space-y-6 ">
+    <h1 class="text-3xl font-semibold dark:text-zinc-100">Live GPS Tracking</h1>
+
+    <div class="flex items-center space-x-4">
+        <label for="trainFilter" class="font-medium dark:text-zinc-200">Show:</label>
+        <select id="trainFilter"
+                class="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                onchange="reload()">
+            <option value="">All Trains</option>
+            <option value="Train1">Train1</option>
+            <option value="Train2">Train2</option>
+            <option value="Train3">Train3</option>
+            <option value="Train4">Train4</option>
+            <option value="Train5">Train5</option>
+        </select>
+    </div>
+
+    <div id="map" class="w-full h-[500px] rounded-lg shadow-md"></div>
+</div>
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        console.log("📍 Live map script starting");
+
+        // initialize map
+        const map = L.map("map").setView([1.3521, 103.8198], 12);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 18,
+          attribution: "&copy; OpenStreetMap contributors",
+        }).addTo(map);
+
+        let overlays = [];
+
+        async function reload() {
+          // remove old shapes
+          overlays.forEach(o => map.removeLayer(o));
+          overlays = [];
+
+          const tid = document.getElementById("trainFilter").value;
+          const url = `/TrainLocation/GetLatest?maxPoints=20${tid ? `&trainId=${tid}` : ""}`;
+          const resp = await fetch(url);
+          const pts  = await resp.json();
+
+          // group by train
+          const byTrain = pts.reduce((acc,p) => {
+            (acc[p.trainId] = acc[p.trainId]||[]).push(p);
+            return acc;
+          }, {});
+
+          const allCoords = [];
+
+          for (const [trainId, list] of Object.entries(byTrain)) {
+            // build coords
+            const latlngs = list.map(p => [p.latitude, p.longitude]);
+            allCoords.push(...latlngs);
+
+            // draw polyline (thin & semi-transparent)
+            const line = L.polyline(latlngs, {
+              color:        getColor(trainId),
+              weight:       2,
+              opacity:      0.6,
+              smoothFactor: 1
+            }).addTo(map);
+            overlays.push(line);
+
+            // head marker (white border + colored fill)
+            const last = list[list.length - 1];
+            const marker = L.circleMarker([last.latitude, last.longitude], {
+              radius:      8,
+              fillColor:   getColor(trainId),
+              color:       "#fff",
+              weight:      2,
+              fillOpacity: 0.9
+            })
+              .bindPopup(
+                `<strong>${trainId}</strong><br/>${new Date(last.timestamp).toLocaleTimeString()}`
+              )
+              .addTo(map);
+
+            overlays.push(marker);
+          }
+
+          // auto‐zoom to show all trains
+          if (allCoords.length) {
+            map.fitBounds(allCoords, { padding: [50, 50] });
+          }
+        }
+
+        function getColor(id) {
+          return {
+            Train1: "#e11d48",
+            Train2: "#3b82f6",
+            Train3: "#10b981",
+            Train4: "#f59e0b",
+            Train5: "#8b5cf6"
+          }[id] || "#6b7280";
+        }
+
+        // initial + interval
+        reload();
+        setInterval(reload, 5000);
+    </script>
+}

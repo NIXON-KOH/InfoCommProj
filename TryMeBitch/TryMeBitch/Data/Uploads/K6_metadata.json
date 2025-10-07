@@ -1,0 +1,26 @@
+﻿{
+  "Areas": [
+    {
+      "Name": "Track",
+      "Shape": "polygon",
+      "Points": [
+        [ 300, 20 ],
+        [ 380, 10 ],
+        [ 280, 400 ],
+        [ 10, 400 ]
+      ],
+      "Threshold": 0.2
+    },
+    {
+      "Name": "Safety",
+      "Shape": "polygon",
+      "Points": [
+        [ 420, 10 ],
+        [ 390, 10 ],
+        [ 300, 400 ],
+        [ 430, 400 ]
+      ],
+      "Threshold": 0.20
+    }
+  ]
+}

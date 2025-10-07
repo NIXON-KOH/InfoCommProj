@@ -1,0 +1,104 @@
+﻿@model TryMeBitch.Models.AlertDefinition
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Edit Alert Definition";
+    var selectionList = ViewData["SelectionList"] as SelectList
+                      ?? new SelectList(Enumerable.Empty<string>());
+    var roleList = ViewData["RoleList"] as SelectList
+                 ?? new SelectList(Enumerable.Empty<string>());
+}
+
+<div class="max-w-3xl mx-auto p-6">
+    <h1 class="text-2xl font-semibold mb-6">Edit Alert Definition</h1>
+
+    <form asp-action="Edit" class="space-y-6">
+        <!-- 1) Validation summary -->
+        <div asp-validation-summary="ModelOnly" class="text-red-600 mb-4"></div>
+
+        <!-- Hidden Id -->
+        <input asp-for="Id" type="hidden" />
+
+        <!-- Alert Name -->
+        <div>
+            <label asp-for="Name" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Alert Name
+            </label>
+            <input asp-for="Name"
+                   class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500" />
+            <span asp-validation-for="Name" class="text-sm text-red-600"></span>
+        </div>
+
+        <!-- Bay/Train selector -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                @(Model.Type == TryMeBitch.Models.AlertType.BayPower ? "Bay" : "Train")
+            </label>
+            <select asp-for="TargetId" asp-items="selectionList"
+                    class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <option value="">— Select —</option>
+            </select>
+            <span asp-validation-for="TargetId" class="text-sm text-red-600"></span>
+        </div>
+
+        <!-- Type (readonly) -->
+        <div>
+            <label asp-for="Type" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Type
+            </label>
+            <input asp-for="Type" readonly
+                   class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-700 dark:text-gray-200" />
+        </div>
+
+        <!-- Role -->
+        <div>
+            <label asp-for="Role" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Role
+            </label>
+            <select asp-for="Role" asp-items="@(ViewData["RoleList"] as SelectList)"
+                    class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500">
+                <option value="">— Select Role —</option>
+            </select>
+            <span asp-validation-for="Role" class="text-sm text-red-600"></span>
+        </div>
+
+        <!-- Threshold (%) -->
+        <div>
+            <label asp-for="Threshold" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Threshold (%)
+            </label>
+            <div class="relative mt-1">
+                <input asp-for="Threshold" type="number" step="0.1" placeholder="20"
+                       class="block w-full pr-10 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500" />
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 dark:text-gray-400">%</span>
+            </div>
+            <span asp-validation-for="Threshold" class="text-sm text-red-600"></span>
+        </div>
+
+        <!-- Message Template -->
+        <div>
+            <label asp-for="MessageTemplate" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Email Message
+            </label>
+            <textarea asp-for="MessageTemplate" rows="3"
+                      class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500"></textarea>
+            <span asp-validation-for="MessageTemplate" class="text-sm text-red-600"></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex space-x-4">
+            <button type="submit"
+                    class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded shadow">
+                Save Changes
+            </button>
+            <a asp-action="Index"
+               class="px-6 py-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-100 rounded shadow">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

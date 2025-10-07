@@ -1,0 +1,68 @@
+﻿@model TryMeBitch.Models.RFIDEntryLogsViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "RFID Entry Logs";
+}
+
+
+
+<div class="max-w-6xl mx-auto my-12">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-semibold text-gray-800 dark:text-gray-100">
+            RFID Entries & Exits
+        </h1>
+        <a asp-action="Chart"
+           class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200">
+            View Chart
+        </a>
+    </div>
+
+    <!-- FILTER FORM -->
+    <form asp-action="Index" method="get" class="mb-4 flex items-center space-x-2">
+        <label asp-for="SelectedTrain" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Train:
+        </label>
+        <select asp-for="SelectedTrain" asp-items="Model.TrainOptions"
+                class="bg-white dark:bg-zinc-700 border border-gray-300 dark:border-zinc-600
+                   text-gray-800 dark:text-gray-100 rounded-lg px-3 py-1
+                   focus:outline-none focus:ring-2 focus:ring-pink-500">
+            <option value="">All</option>
+        </select>
+        <button type="submit"
+                class="px-4 py-1 bg-pink-600 hover:bg-pink-700 text-white rounded-lg">
+            Filter
+        </button>
+    </form>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-zinc-700 bg-white dark:bg-zinc-800 rounded-lg shadow">
+            <thead class="bg-gray-50 dark:bg-zinc-700">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Train ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Action</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Timestamp</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-zinc-800 divide-y divide-gray-200 dark:divide-zinc-700">
+                @foreach (var log in Model.Logs)
+                {
+                    <tr class="hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">@log.TrainId</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs font-semibold leading-5 rounded-full
+                             @(log.EntryStatus == "Entry"
+                                                                 ? "text-green-800 bg-green-100 dark:text-green-100 dark:bg-green-900"
+                                                                 : "text-red-800 bg-red-100 dark:text-red-100 dark:bg-red-900")">
+                            @log.EntryStatus
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
+                        @log.EntryTime.ToString("g")
+                    </td>
+
+                </tr>
+                                }
+            </tbody>
+        </table>
+    </div>
+</div>

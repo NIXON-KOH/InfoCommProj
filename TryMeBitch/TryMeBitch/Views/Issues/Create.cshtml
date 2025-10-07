@@ -1,0 +1,170 @@
+﻿@model TryMeBitch.Models.Issues
+
+@{
+    ViewData["Title"] = "Create Issue";
+}
+
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Create New Issue</h1>
+        <p class="text-gray-600 dark:text-gray-400">Report and track issues efficiently with our streamlined form.</p>
+    </div>
+
+    <!-- Main Form Container -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <form asp-action="Create" method="post" class="p-8 space-y-6" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="id" />
+            <input type="hidden" asp-for="station" id="station">
+            <!-- Title -->
+            <div class="space-y-2">
+                <label for="title" class="block text-sm font-semibold text-gray-700 dark:text-gray-200">
+                    Issue Title <span class="text-red-500">*</span>
+                </label>
+                <input type="text"
+                       id="title"
+                       name="title"
+                       asp-for="title"
+                       required
+                       placeholder="Issue title"
+                       class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" />
+                <span class="text-red-500 text-sm hidden">This field is required</span>
+            </div>
+
+            <!-- Summary -->
+            <div class="space-y-2">
+                <label for="summary" class="block text-sm font-semibold text-gray-700 dark:text-gray-200">
+                    Summary <span class="text-red-500">*</span>
+                </label>
+                <textarea id="summary"
+                          name="summary"
+                          asp-for="summary"
+                          rows="4"
+                          required
+                          placeholder="Provide a detailed description of the issue."
+                          class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-vertical"></textarea>
+                <span class="text-red-500 text-sm hidden">This field is required</span>
+            </div>
+
+            <!-- Severity & Status Row -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Severity -->
+                <div class="space-y-2">
+                    <label for="Severity" class="block text-sm font-semibold text-gray-700 dark:text-gray-200">
+                        Severity <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <select id="Severity"
+                                name="Severity"
+                                asp-for="Severity"
+                                required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none cursor-pointer">
+                            <option value="">Select severity level</option>
+                            <option value="Low">🟢 Low - Minor issue, low impact</option>
+                            <option value="Medium">🟡 Medium - Moderate impact</option>
+                            <option value="High">🟠 High - Significant impact</option>
+                            <option value="Critical">🔴 Critical - Urgent, system down</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="text-red-500 text-sm hidden">Please select a severity level</span>
+                </div>
+
+                <!-- Status -->
+                <div class="space-y-2">
+                    <label for="status" class="block text-sm font-semibold text-gray-700 dark:text-gray-200">
+                        Status <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <select id="status"
+                            asp-for="status"
+                                name="status"
+                                required
+                                class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 appearance-none cursor-pointer">
+                            <option value="">Select current status</option>
+                            <option value="Open">Open - New issue</option>
+                            <option value="In Progress">In Progress - Being worked on</option>
+                            <option value="Resolved">Resolved - Issue fixed</option>
+                            <option value="Closed">Closed - Issue completed</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="text-red-500 text-sm hidden">Please select a status</span>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <button type="submit"
+                        class="flex-1 sm:flex-none px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                    <span class="flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Create Issue
+                    </span>
+                </button>
+
+                <a href="/Issues"
+                   class="flex-1 sm:flex-none px-8 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 text-center">
+                    <span class="flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Back to List
+                    </span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('station').value = localStorage.getItem('selectedStation') || 'Unknown Station';
+        // Basic form validation
+       document.querySelector('form').addEventListener('submit', function(e) {
+        const requiredFields = this.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            const errorSpan = field.parentNode.querySelector('.text-red-500');
+            if (!field.value.trim()) {
+                field.classList.add('border-red-500', 'focus:ring-red-500');
+                field.classList.remove('border-gray-300', 'dark:border-gray-600', 'focus:ring-blue-500');
+                if (errorSpan) errorSpan.classList.remove('hidden');
+                isValid = false;
+            } else {
+                field.classList.remove('border-red-500', 'focus:ring-red-500');
+                field.classList.add('border-gray-300', 'dark:border-gray-600', 'focus:ring-blue-500');
+                if (errorSpan) errorSpan.classList.add('hidden');
+            }
+        });
+
+        if (!isValid) {
+            e.preventDefault(); // Stops form from submitting
+        }
+    });
+
+
+    // Remove validation styling on input
+    document.querySelectorAll('[required]').forEach(field => {
+        field.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.classList.remove('border-red-500', 'focus:ring-red-500');
+                this.classList.add('border-gray-300', 'dark:border-gray-600', 'focus:ring-blue-500');
+                const errorSpan = this.parentNode.querySelector('.text-red-500');
+                if (errorSpan) errorSpan.classList.add('hidden');
+            }
+        });
+    });
+    
+</script>

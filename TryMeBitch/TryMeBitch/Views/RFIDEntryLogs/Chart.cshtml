@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "RFID Entry/Exit Chart";
+}
+
+@{
+    var trainOptions = (SelectList)ViewBag.TrainOptions;
+    var selectedTrain = (string)ViewBag.SelectedTrain;
+}
+
+
+<div class="max-w-4xl mx-auto my-12 p-6 bg-white dark:bg-zinc-800 rounded-lg shadow">
+    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+        RFID Entries vs Exits by Month
+    </h1>
+
+    <form method="get" class="mb-4 flex items-center gap-2">
+        <label for="trainId" class="text-sm font-medium text-gray-700 dark:text-gray-300">Train:</label>
+        <select id="trainId" name="trainId"
+                class="border border-gray-300 dark:border-zinc-600 rounded-lg px-3 py-1 bg-white dark:bg-zinc-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                asp-items="ViewBag.TrainOptions">
+            <option value="">All</option>
+        </select>
+        <button type="submit" class="px-4 py-1 bg-pink-600 hover:bg-pink-700 text-white rounded-lg">Filter</button>
+    </form>
+
+    <a asp-action="Index"
+       class="inline-block mb-4 px-4 py-2 bg-gray-200 dark:bg-zinc-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-600 transition-colors duration-200">
+        ← Back to List
+    </a>
+
+
+    <div class="relative w-full h-64">
+        <canvas id="rfidChart" class="absolute inset-0 w-full h-full"></canvas>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // These will be filled by the controller's ViewBag data
+    const labels  = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Labels));
+    const entries = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Entries));
+    const exits   = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Exits));
+    console.log("Labels:", labels);
+    console.log("Entries:", entries);
+    console.log("Exits:", exits);
+
+    
+
+
+    new Chart(document.getElementById('rfidChart'), {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Entries', data: entries, backgroundColor: '#10b981' },
+          { label: 'Exits',   data: exits,  backgroundColor: '#f59e0b' }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          x: { stacked: true, title: { display: true, text: 'Month' } },
+          y: { stacked: true, title: { display: true, text: 'Count' } }
+        },
+        plugins: {
+          legend: { position: 'top' }
+        }
+      }
+    });
+</script>
+
+}

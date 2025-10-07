@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Wheel Scan Monitoring";
+}
+
+@section Styles { }
+
+<div class="flex items-center space-x-3 dark:text-zinc-200">
+    <label for="wsFilter" class="font-medium">Train:</label>
+    <select id="wsFilter" class="border rounded px-2" onchange="loadScans()">
+        <option value="Train1">Train1</option>
+        <option value="Train2">Train2</option>
+        <option value="Train3">Train3</option>
+        <option value="Train4">Train4</option>
+        <option value="Train5">Train5</option>
+    </select>
+
+    <label for="wheelFilter" class="font-medium ml-4">Wheel:</label>
+    <select id="wheelFilter" class="border rounded px-2" onchange="loadScans()">
+        <option value="">All</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+    </select>
+</div>
+
+<canvas id="scanChart" class="bg-white rounded shadow-md p-4 dark:text-zinc-200"></canvas>
+
+<div class="overflow-auto rounded shadow ring-1 ring-gray-200 mt-6">
+    <table class="min-w-full text-sm text-left text-gray-700 dark:text-zinc-200 divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-4 py-2">Timestamp</th>
+                <th class="px-4 py-2">Train ID</th>
+                <th class="px-4 py-2">Wheel</th>
+                <th class="px-4 py-2">Distance (mm)</th>
+                <th class="px-4 py-2">Status</th>
+            </tr>
+        </thead>
+        <tbody id="scanTableBody"></tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1"></script>
+
+    <script>
+        let chart;
+
+        async function loadScans() {
+            const t = document.getElementById('wsFilter').value;
+            const w = document.getElementById('wheelFilter').value;
+
+            const params = new URLSearchParams({ limit: '100' });
+            if (t) params.append('trainId', t);
+            if (w) params.append('wheel', w);
+
+            const data = await fetch(`/WheelScan/GetRecent?${params.toString()}`)
+                .then(r => r.json());
+
+            /* ---- chart ---- */
+            const byWheel = {};
+            data.forEach(r => {
+                (byWheel[r.wheelPosition] = byWheel[r.wheelPosition] || [])
+                    .push({ x: new Date(r.timestamp), y: r.distance, anomaly: r.isAnomaly });
+            });
+
+            const datasets = Object.entries(byWheel).map(([wp, pts]) => {
+                // sort by time so lines draw left->right even though query is desc
+                pts.sort((a, b) => a.x - b.x);
+                return {
+                    label: `Wheel ${wp}`,
+                    data: pts,
+                    showLine: true,
+                    pointRadius: 4,
+                    pointBackgroundColor: pts.map(p => p.anomaly ? 'red' : 'blue')
+                };
+            });
+
+            if (chart) chart.destroy();
+            chart = new Chart(document.getElementById('scanChart'), {
+                type: 'scatter',
+                data: { datasets },
+                options: {
+                    scales: {
+                        x: { type: 'time', time: { unit: 'minute' } },
+                        y: { title: { display: true, text: 'Distance (mm)' } }
+                    }
+                }
+            });
+
+            /* ---- table ---- */
+            const tbody = document.getElementById('scanTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach((row, i) => {
+                const badge = row.isAnomaly
+                    ? '<span class="inline-block px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">Needs&nbsp;Maintenance</span>'
+                    : '<span class="inline-block px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-semibold">OK</span>';
+
+                const tr = document.createElement('tr');
+                tr.className = i % 2 ? 'bg-gray-50 hover:bg-gray-100' : 'hover:bg-gray-100';
+                tr.innerHTML = `
+                    <td class="px-4 py-2 whitespace-nowrap">${new Date(row.timestamp).toLocaleString()}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">${row.trainId}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">${row.wheelPosition}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">${row.distance.toFixed(3)}</td>
+                    <td class="px-4 py-2">${badge}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadScans().catch(console.error);
+            setInterval(() => loadScans().catch(console.error), 3_000);
+        });
+    </script>
+}

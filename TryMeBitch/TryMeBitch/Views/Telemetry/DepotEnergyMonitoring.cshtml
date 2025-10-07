@@ -1,0 +1,173 @@
+﻿@model TryMeBitch.Models.EnergyMonitoringViewModel
+@{
+    ViewData["Title"] = "Depot Energy Usage Monitoring";
+
+    // grab the current bay (default to Bay-01)
+    var selectedBay = (ViewData["SelectedBay"] as string) ?? "Bay-01";
+    var bayList = new[] { "Bay-01", "Bay-02", "Bay-03" };
+}
+
+
+<div class="space-y-4 p-6 dark:text-zinc-200">
+    <h1 class="text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
+        Depot Energy Usage Monitoring
+    </h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+
+        <div class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4 text-center">
+            <div class="text-sm uppercase text-zinc-500">Peak (Last Hour)</div>
+            <div class="text-2xl font-semibold">
+                @String.Format("{0:N0}", Model.PeakOverall) W
+            </div>
+        </div>
+        <div class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4 text-center">
+            <div class="text-sm uppercase text-zinc-500">Avg (Last Hour)</div>
+            <div class="text-2xl font-semibold">
+                @String.Format("{0:N0}", Model.AvgOverall) W
+            </div>
+        </div>
+
+    </div>
+    <form method="get" class="mb-4 flex items-center space-x-2">
+        <label class="font-medium text-zinc-700 dark:text-zinc-200">Select Bay:</label>
+        <select name="bayId"
+                onchange="this.form.submit()"
+                class="p-1 border border-zinc-300 dark:border-zinc-600 rounded bg-white dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100">
+            @foreach (var b in bayList)
+            {
+                <option value="@b" selected="@(b == selectedBay ? "selected" : null)">
+                    @b
+                </option>
+            }
+        </select>
+    </form>
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4">
+        <h2 class="text-lg font-medium mb-2">Per-Bay Statistics (last hour)</h2>
+        <div class="overflow-auto">
+            <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                <thead class="bg-zinc-50 dark:bg-zinc-700">
+                    <tr>
+                        <th class="px-3 py-2 text-left text-sm font-semibold">Bay ID</th>
+                        <th class="px-3 py-2 text-right text-sm font-semibold">Avg Watts</th>
+                        <th class="px-3 py-2 text-right text-sm font-semibold">Min Watts</th>
+                        <th class="px-3 py-2 text-right text-sm font-semibold">Max Watts</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                    @foreach (var s in Model.Stats)
+                    {
+                        <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                            <td class="px-3 py-1 text-sm">@s.BayId</td>
+                            <td class="px-3 py-1 text-sm text-right font-medium">@String.Format("{0:N0}", s.AvgWatts)</td>
+                            <td class="px-3 py-1 text-sm text-right">@String.Format("{0:N0}", s.MinWatts)</td>
+                            <td class="px-3 py-1 text-sm text-right">@String.Format("{0:N0}", s.MaxWatts)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- High-Usage Alerts -->
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4 mt-4">
+        <h2 class="font-medium mb-2">
+            High-Usage Alerts (≥ @String.Format("{0:N0}", Model.ThresholdValue) W)
+        </h2>
+        @if (!Model.Alerts.Any())
+        {
+            <p class="text-sm text-zinc-600 dark:text-zinc-400">
+                No readings above threshold in the last hour.
+            </p>
+        }
+        else
+        {
+            <div class="overflow-auto">
+                <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                    <thead class="bg-rose-50 dark:bg-rose-900/50">
+                        <tr>
+                            <th class="px-3 py-2 text-left text-sm font-semibold">Time</th>
+                            <th class="px-3 py-2 text-left text-sm font-semibold">Bay ID</th>
+                            <th class="px-3 py-2 text-right text-sm font-semibold">Watts</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                        @foreach (var a in Model.Alerts)
+                        {
+                            <tr class="border-l-4 border-rose-500 bg-rose-50 dark:bg-rose-900 hover:bg-rose-200 dark:hover:bg-rose-700">
+                                <td class="px-3 py-1 text-sm">@a.Timestamp.ToString("HH:mm")</td>
+                                <td class="px-3 py-1 text-sm">@a.BayId</td>
+                                <td class="px-3 py-1 text-sm text-right">@String.Format("{0:N0}", a.Watts)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </section>
+
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4 mt-4 lg:col-span-2">
+        <h2 class="font-medium mb-2">Avg Energy Usage Over Time (Last Hour)</h2>
+        <!-- Much taller container -->
+        <div class="w-full h-96 md:h-[500px]">
+            <canvas id="energyChart" class="w-full h-full"></canvas>
+        </div>
+    </section>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script>
+                   const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.GroupedReadings.Select(p => p.Time.ToString("HH:mm"))
+    ));
+            const dataPoints = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+      Model.GroupedReadings.Select(p => p.Value)
+    ));
+            const thresholdValue = @Model.ThresholdValue;
+
+            // compute the minimum so we can clip the y-axis
+            const minVal = Math.min(...dataPoints);
+
+            const ctx = document.getElementById('energyChart').getContext('2d');
+            new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: 'Avg Watts',
+                    data: dataPoints,
+                    borderColor: 'rgb(59,130,246)',
+                    backgroundColor: 'rgba(59,130,246,0.1)',
+                    fill: true,
+                    tension: 0.2,
+                    pointRadius: 3
+                  },
+                  {
+                    label: 'Threshold',
+                    data: Array(labels.length).fill(thresholdValue),
+                    borderColor: 'rgb(239,68,68)',
+                    borderDash: [5,5],
+                    pointRadius: 0,
+                    fill: false
+                  }
+                ]
+              },
+              options: {
+                maintainAspectRatio: false,  // fill the .h-96 container
+                scales: {
+                  x: {
+                    ticks: { maxTicksLimit: 12 }
+                  },
+                  y: {
+                    beginAtZero: false,
+                    min: minVal - 50 // don’t show values below ~minVal - 50
+                  }
+                },
+                interaction: { mode: 'index', intersect: false }
+              }
+            });
+    </script>
+}

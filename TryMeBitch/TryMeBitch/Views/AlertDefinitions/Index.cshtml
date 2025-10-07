@@ -1,0 +1,156 @@
+﻿@model IEnumerable<TryMeBitch.Models.AlertDefinition>
+@using TryMeBitch.Models
+@{
+    ViewData["Title"] = "Manage Alert Definitions";
+
+    var bayRules = Model.Where(r => r.Type == AlertType.BayPower);
+    var capRules = Model.Where(r => r.Type == AlertType.CapacityUtilization);
+    var wheelRules = Model.Where(r => r.Type == AlertType.WheelMaintenance);
+}
+
+<div class="max-w-7xl mx-auto p-6 space-y-6  dark:text-zinc-200">
+    <h1 class="text-2xl font-semibold  dark:text-zinc-100">Manage Alert Definitions</h1>
+
+    <div class="flex space-x-4">
+        <a asp-action="CreateBayRule" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded shadow  dark:text-zinc-200">
+            + Create Bay Rule
+        </a>
+        <a asp-action="CreateCapacityRule" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded shadow  dark:text-zinc-200">
+            + Create Capacity Rule
+        </a>
+        <a asp-action="CreateWheelRule"
+           class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded shadow dark:text-zinc-200">
+            + Create Wheel monitoring Rule
+        </a>
+    </div>
+
+    <!-- Search -->
+    <div class="flex items-center space-x-2 mb-4 dark:text-zinc-200">
+        <form method="get" class="flex-1">
+            <div class="relative">
+                <input name="search"
+                       value="@(ViewData["Search"] ?? "")"
+                       placeholder="Search by name or target…"
+                       class="w-full border border-gray-300 dark:border-gray-600 rounded px-4 py-2 pr-12 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500" />
+                <button type="submit"
+                        class="absolute right-0 top-0 mt-2 mr-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    🔍
+                </button>
+            </div>
+        </form>
+        @if (!string.IsNullOrWhiteSpace((string?)ViewData["Search"]))
+        {
+            <a asp-action="Index"
+               class="px-3 py-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 rounded">
+                Clear
+            </a>
+        }
+    </div>
+
+    <!-- BayPower rules -->
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4">
+        <h2 class="text-lg font-medium mb-2">Bay Power Rules</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full table-auto divide-y divide-zinc-200 dark:divide-zinc-700">
+                <thead class="bg-zinc-50 dark:bg-zinc-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Name</th>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Bay</th>
+                        <th class="px-6 py-3 text-right whitespace-nowrap">Threshold (%)</th>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Role</th>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Email Message</th>
+                        <th class="px-6 py-3 text-center whitespace-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
+                    @foreach (var r in bayRules)
+                    {
+                        <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                            <td class="px-6 py-3 whitespace-nowrap">@r.Name</td>
+                            <td class="px-6 py-3 whitespace-nowrap">@r.TargetId</td>
+                            <td class="px-6 py-3 text-right whitespace-nowrap">@r.Threshold</td>
+                            <td class="px-6 py-3 whitespace-nowrap">@r.Role</td>
+                            <td class="px-6 py-3 whitespace-nowrap">@r.MessageTemplate</td>
+                            <td class="px-6 py-3 text-center space-x-2 whitespace-nowrap">
+                                <a asp-action="Edit" asp-route-id="@r.Id" class="px-3 py-1 bg-yellow-500 text-white rounded text-sm">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@r.Id" class="px-3 py-1 bg-red-600 text-white rounded text-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Capacity rules -->
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4">
+        <h2 class="text-lg font-medium mb-2">Capacity Utilization Rules</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full table-auto divide-y divide-zinc-200 dark:divide-zinc-700">
+                <thead class="bg-zinc-50 dark:bg-zinc-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Name</th>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Train</th>
+                        <th class="px-6 py-3 text-right whitespace-nowrap">Threshold (%)</th>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Role</th>
+                        <th class="px-6 py-3 text-left whitespace-nowrap">Email Message</th>
+                        <th class="px-6 py-3 text-center whitespace-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
+                    @foreach (var r in capRules)
+                    {
+                        <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                            <td class="px-6 py-3 whitespace-nowrap">@r.Name</td>
+                            <td class="px-6 py-3 whitespace-nowrap">@r.TargetId</td>
+                            <td class="px-6 py-3 text-right whitespace-nowrap">@r.Threshold</td>
+                            <td class="px-6 py-3 whitespace-nowrap">@r.Role</td>
+                            <td class="px-6 py-3 whitespace-nowrap">@r.MessageTemplate</td>
+                            <td class="px-6 py-3 text-center space-x-2 whitespace-nowrap">
+                                <a asp-action="Edit" asp-route-id="@r.Id" class="px-3 py-1 bg-yellow-500 text-white rounded text-sm">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@r.Id" class="px-3 py-1 bg-red-600 text-white rounded text-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- Wheel-maintenance rules -->
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4">
+        <h2 class="text-lg font-medium mb-2">Wheel-Maintenance Rules</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full table-auto divide-y divide-zinc-200 dark:divide-zinc-700">
+                <thead class="bg-zinc-50 dark:bg-zinc-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">Train</th>
+                        <th class="px-6 py-3 text-right">Threshold&nbsp;(mm)</th>
+                        <th class="px-6 py-3 text-left">Role</th>
+                        <th class="px-6 py-3 text-left">Email Message</th>
+                        <th class="px-6 py-3 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
+                    @foreach (var r in wheelRules)
+                    {
+                        <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                            <td class="px-6 py-3">@r.Name</td>
+                            <td class="px-6 py-3">@r.TargetId</td>
+                            <td class="px-6 py-3 text-right">@r.Threshold</td>
+                            <td class="px-6 py-3">@r.Role</td>
+                            <td class="px-6 py-3">@r.MessageTemplate</td>
+                            <td class="px-6 py-3 text-center space-x-2">
+                                <a asp-action="Edit" asp-route-id="@r.Id"
+                                   class="px-3 py-1 bg-yellow-500 text-white rounded text-sm">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@r.Id"
+                                   class="px-3 py-1 bg-red-600 text-white rounded text-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>

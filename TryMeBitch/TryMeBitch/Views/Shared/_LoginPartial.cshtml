@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TryMeBitch.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+<script src="https://cdn.jsdelivr.net/npm/@@tailwindcss/browser@4"></script>
+
+<ul class="flex space-x-6 items-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        <li>
+            <a class="text-gray-900 hover:text-indigo-600 font-medium transition-colors duration-200"
+               id="register"
+               asp-area="Identity" asp-page="/Account/Register">
+                Register
+            </a>
+        </li>
+        <li>
+            <a class="text-gray-900 hover:text-indigo-600 font-medium transition-colors duration-200"
+               id="login"
+               asp-area="Identity" asp-page="/Account/Login">
+                Login
+            </a>
+        </li>
+    }
+</ul>
+
+@RenderBody()
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+@RenderSection("Scripts", required: false)

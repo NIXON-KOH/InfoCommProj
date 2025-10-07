@@ -1,0 +1,132 @@
+﻿@model TryMeBitch.Models.LoadMonitoringViewModel
+@{
+    ViewData["Title"] = "Load Monitoring";
+    var trainFilter = ViewData["TrainFilter"] as SelectList;
+}
+
+<div class="space-y-4 p-6 dark:text-zinc-200">
+
+    <h1 class="text-2xl font-semibold">Train Load Monitoring</h1>
+    <div class="mb-4">
+        <form method="get" class="inline-block">
+            <label class="mr-2">Show:</label>
+            <select name="trainId" asp-items="trainFilter"
+                    onchange="this.form.submit()"
+                    class="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+            </select>
+        </form>
+    </div>
+
+    <!-- Avg / Max Table -->
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4">
+        <h2 class="font-medium mb-2">Avg / Max Load (Last Hour)</h2>
+        <div class="overflow-auto">
+            <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                <thead class="bg-zinc-50 dark:bg-zinc-700">
+                    <tr>
+                        <th class="px-3 py-2 text-left">Train</th>
+                        <th class="px-3 py-2 text-right">Avg Load (kg)</th>
+                        <th class="px-3 py-2 text-right">Max Load (kg)</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                    @foreach (var cs in Model.CarriageStats)
+                    {
+                        <tr class="hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                            <td class="px-3 py-1">@cs.CarriageId</td>
+                            <td class="px-3 py-1 text-right">@String.Format("{0:N1}", cs.AvgLoad)</td>
+                            <td class="px-3 py-1 text-right">@String.Format("{0:N1}", cs.MaxLoad)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Capacity Utilization Bars -->
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4">
+        <h2 class="font-medium mb-4">Capacity Utilization</h2>
+        <div class="space-y-4">
+            @foreach (var cs in Model.CarriageStats)
+            {
+                // C# code context: compute pct
+                var pct = Math.Min(100, cs.CurrentLoad / 3000.0 * 100);
+
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="font-medium">@cs.CarriageId</span>
+                        <span class="text-sm">@String.Format("{0:N0}", pct)%</span>
+                    </div>
+                    <div class="w-full bg-zinc-200 dark:bg-zinc-700 h-3 rounded">
+                        <div class="bg-green-500 h-3 rounded" style="width:@pct%"></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+
+    <!-- Load Over Time Chart -->
+    <section class="bg-white dark:bg-zinc-800 shadow rounded-lg p-4 mt-4 lg:col-span-2">
+        <h2 class="font-medium mb-2">Load Over Time (Last Hour)</h2>
+        <div class="w-full h-64 md:h-72">
+            @* <div class="w-full h-96 md:h-[500px]"> *@
+            <!-- taller: 24rem on mobile, 500px on md+ -->
+            <canvas id="loadChart" class="w-full h-full"></canvas>
+        </div>
+        @* </div> *@
+    </section>
+
+
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script>
+                const pts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+      Model.LoadSeries.Select(p => new
+      {
+          t = p.Time.ToString("HH:mm"),
+          v = p.Value
+      })
+    ));
+                const labels = pts.map(x => x.t);
+                const data   = pts.map(x => x.v);
+
+                        new Chart(
+                      document.getElementById('loadChart').getContext('2d'),
+                      {
+                        type: 'line',
+                        data: {
+                          labels: labels,
+                          datasets: [{
+                            label: 'Load (kg)',
+                            data: data,
+                            borderColor: 'rgb(34,197,94)',
+                            backgroundColor: 'rgba(34,197,94,0.2)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 2
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          maintainAspectRatio: false,   // fill the container
+                          scales: {
+                            x: {
+                              ticks: { maxTicksLimit: 12 }
+                            },
+                            y: {
+                              beginAtZero: false,
+                              min: 2000,                 // don’t show below 2 000 kg
+                              ticks: {
+                                stepSize: 250          // only show 2000,2250,2500… up to max
+                              }
+                            }
+                          },
+                          interaction: { mode: 'index', intersect: false }
+                        }
+                      }
+                    );
+
+    </script>
+    }

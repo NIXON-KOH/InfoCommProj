@@ -1,0 +1,77 @@
+﻿@model TryMeBitch.Models.Joel_Train
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Train Details";
+}
+
+<div class="max-w-md mx-auto my-12 p-6
+            bg-white dark:bg-zinc-800
+            rounded-lg shadow-md
+            transition-colors duration-200">
+    <h1 class="text-3xl font-semibold
+             text-gray-800 dark:text-gray-100
+             mb-6 text-center">
+        Train Details
+    </h1>
+
+    <dl class="divide-y divide-gray-200 dark:divide-zinc-700">
+        <div class="py-2 flex justify-between">
+            <dt class="text-sm font-medium text-gray-600 dark:text-gray-300">Train ID:</dt>
+            <dd class="text-sm text-gray-900 dark:text-gray-100">@Model.TrainId</dd>
+        </div>
+        <div class="py-2 flex justify-between">
+            <dt class="text-sm font-medium text-gray-600 dark:text-gray-300">Name:</dt>
+            <dd class="text-sm text-gray-900 dark:text-gray-100">@Model.Name</dd>
+        </div>
+        <div class="py-2 flex justify-between">
+            <dt class="text-sm font-medium text-gray-600 dark:text-gray-300"># Carriages:</dt>
+            <dd class="text-sm text-gray-900 dark:text-gray-100">@Model.NumCarriages</dd>
+        </div>
+        <div class="py-2 flex justify-between">
+            <dt class="text-sm font-medium text-gray-600 dark:text-gray-300">Line:</dt>
+            <dd class="text-sm text-gray-900 dark:text-gray-100">@Model.Line</dd>
+        </div>
+        <div class="py-2 flex justify-between">
+            <dt class="text-sm font-medium text-gray-600 dark:text-gray-300">Status:</dt>
+            <dd class="text-sm text-gray-900 dark:text-gray-100">@Model.Status</dd>
+        </div>
+        <div class="py-2 flex justify-between">
+            <dt class="text-sm font-medium text-gray-600 dark:text-gray-300">Active:</dt>
+            <dd class="text-sm">
+                @if (Model.IsActive)
+                {
+                    <span class="inline-flex px-2 text-xs font-semibold leading-5
+                            text-green-800 bg-green-100 dark:text-green-100 dark:bg-green-900 rounded-full">
+                        Yes
+                    </span>
+                }
+                else
+                {
+                    <span class="inline-flex px-2 text-xs font-semibold leading-5
+                            text-red-800 bg-red-100 dark:text-red-100 dark:bg-red-900 rounded-full">
+                        No
+                    </span>
+                }
+            </dd>
+        </div>
+    </dl>
+
+    <div class="mt-6 flex justify-end space-x-4">
+        <a asp-action="Edit" asp-route-id="@Model.TrainId"
+           class="px-4 py-2
+              bg-blue-600 dark:bg-blue-500
+              text-white
+              rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400
+              transition-colors duration-200">
+            Edit
+        </a>
+        <a asp-action="Index"
+           class="px-4 py-2
+              bg-gray-200 dark:bg-zinc-700
+              text-gray-800 dark:text-gray-200
+              rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-600
+              transition-colors duration-200">
+            Back to List
+        </a>
+    </div>
+</div>

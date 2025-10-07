@@ -1,0 +1,292 @@
+﻿@model TryMeBitch.Models.Issues
+@{
+    ViewData["Title"] = "Delete Issue";
+}
+
+<div class="px-6 py-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="flex-shrink-0">
+                    <div class="h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold text-red-600 dark:text-red-400">Delete Issue</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">Permanent removal confirmation</p>
+                </div>
+            </div>
+
+            <!-- Warning Banner -->
+            <div class="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 dark:border-red-600 p-6 rounded-r-lg">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-red-400 dark:text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.996-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-lg font-semibold text-red-800 dark:text-red-200">
+                            Warning: Permanent Action
+                        </h3>
+                        <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+                            <p class="mb-2"><strong>This action cannot be undone.</strong> Deleting this issue will:</p>
+                            <ul class="list-disc list-inside space-y-1 ml-4">
+                                <li>Permanently remove the issue from the system</li>
+                                <li>Delete all associated comments and timeline events</li>
+                                <li>Remove all audit trail and history</li>
+                                <li>Make the data unrecoverable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Issue Details Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-red-200 dark:border-red-800 overflow-hidden mb-8">
+            <!-- Header -->
+            <div class="px-6 py-4 bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-semibold text-white">@Model.title</h2>
+                        <p class="text-red-100 text-sm mt-1">Issue #@Model.id • Review details before deletion</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2">
+                        <span class="text-white text-sm font-medium">@Model.Severity</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Left Column -->
+                    <div class="space-y-6">
+                        <!-- Author & Station -->
+                        <div class="flex items-center space-x-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                            <div class="flex-shrink-0">
+                                <div class="h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                                    @Model.Author.Substring(0, Math.Min(2, Model.Author.Length)).ToUpper()
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Author</h3>
+                                <p class="text-lg font-semibold text-gray-900 dark:text-gray-100">@Model.Author</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Station: @Model.station</p>
+                            </div>
+                        </div>
+
+                        <!-- Status & Severity -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                                <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Current Status</h3>
+                                @if (Model.status == "Open")
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+                                        <div class="w-2 h-2 bg-blue-400 rounded-full mr-2"></div>
+                                        Open
+                                    </span>
+                                }
+                                else if (Model.status == "In Progress")
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
+                                        <div class="w-2 h-2 bg-yellow-400 rounded-full mr-2 animate-pulse"></div>
+                                        In Progress
+                                    </span>
+                                }
+                                else if (Model.status == "Resolved")
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+                                        <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                                        Resolved
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        <div class="w-2 h-2 bg-gray-400 rounded-full mr-2"></div>
+                                        Closed
+                                    </span>
+                                }
+                            </div>
+
+                            <div class="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                                <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Severity Level</h3>
+                                @if (Model.Severity == "Critical")
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400">
+                                        <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        Critical
+                                    </span>
+                                }
+                                else if (Model.Severity == "High")
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400">
+                                        High
+                                    </span>
+                                }
+                                else if (Model.Severity == "Medium")
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
+                                        Medium
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+                                        Low
+                                    </span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Created Date -->
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <div>
+                                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Created</h3>
+                                    <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                        @Model.timestamp.ToString("MMMM dd, yyyy 'at' HH:mm")
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Summary -->
+                    <div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg h-full">
+                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Issue Description</h3>
+                            <div class="prose prose-sm dark:prose-invert max-w-none">
+                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">@Model.summary</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="h-10 w-10 rounded-full bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Final Confirmation</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Please confirm that you want to permanently delete this issue. This action will remove all data associated with this issue and cannot be reversed.
+                    </p>
+
+                    <form asp-action="Delete" id="deleteForm">
+                        <input type="hidden" asp-for="id" />
+
+                        <!-- Confirmation Checkbox -->
+                        <div class="flex items-start space-x-3 mb-6">
+                            <input type="checkbox" id="confirmDelete"
+                                   class="mt-1 h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
+                            <label for="confirmDelete" class="text-sm text-gray-700 dark:text-gray-300">
+                                I understand that this action is permanent and cannot be undone. I want to delete this issue and all associated data.
+                            </label>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button type="submit" id="deleteButton" disabled
+                                    class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                                Delete Issue Permanently
+                            </button>
+
+                            <a asp-action="Index"
+                               class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-lg text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                Cancel & Go Back
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Safety Information -->
+        <div class="mt-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-blue-800 dark:text-blue-200">
+                        <strong>Alternative:</strong> Consider updating the issue status to "Closed" instead of deleting if you want to preserve the audit trail while marking it as resolved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const confirmCheckbox = document.getElementById('confirmDelete');
+        const deleteButton = document.getElementById('deleteButton');
+        const deleteForm = document.getElementById('deleteForm');
+
+        // Enable/disable delete button based on checkbox
+        confirmCheckbox.addEventListener('change', function() {
+            deleteButton.disabled = !this.checked;
+            if (this.checked) {
+                deleteButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                deleteButton.classList.add('hover:bg-red-700');
+            } else {
+                deleteButton.classList.add('opacity-50', 'cursor-not-allowed');
+                deleteButton.classList.remove('hover:bg-red-700');
+            }
+        });
+
+        // Final confirmation on form submit
+        deleteForm.addEventListener('submit', function(e) {
+            if (!confirmCheckbox.checked) {
+                e.preventDefault();
+                return false;
+            }
+
+            const confirmed = confirm('FINAL WARNING: Are you absolutely certain you want to permanently delete this issue? This action cannot be undone and will remove all associated data.');
+            if (!confirmed) {
+                e.preventDefault();
+                return false;
+            }
+
+            // Show loading state
+            deleteButton.disabled = true;
+            deleteButton.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Deleting...
+            `;
+
+            return true;
+        });
+    });
+</script>

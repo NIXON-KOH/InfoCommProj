@@ -1,0 +1,723 @@
+﻿@model IEnumerable<TryMeBitch.Models.HVAC>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <div class="min-h-full">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <svg class="h-8 w-8 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">HVAC Monitoring</h1>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Real-time environmental data dashboard</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <a href="/HVACs/Edit" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                            Edit Threshold
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Stats Overview -->
+            <div class="px-4 py-6 sm:px-0">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div class="p-5">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-red-100 dark:bg-red-900 rounded-md flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-5 w-0 flex-1">
+                                    <dl>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Avg Temperature</dt>
+                                        <dd class="text-lg font-medium text-gray-900 dark:text-white" id="avgTemp">--°F</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div class="p-5">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-md flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-5 w-0 flex-1">
+                                    <dl>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Avg Humidity</dt>
+                                        <dd class="text-lg font-medium text-gray-900 dark:text-white" id="avgHumidity">--%</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div class="p-5">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-md flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-5 w-0 flex-1">
+                                    <dl>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Avg Pressure</dt>
+                                        <dd class="text-lg font-medium text-gray-900 dark:text-white" id="avgPsi">-- PSI</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div class="p-5">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-yellow-100 dark:bg-yellow-900 rounded-md flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="ml-5 w-0 flex-1">
+                                    <dl>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Gas Level Avg</dt>
+                                        <dd class="text-lg font-medium text-gray-900 dark:text-white" id="gasAlerts">--</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="px-4 py-6 sm:px-0">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Temperature & Humidity Chart -->
+                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Temperature & Humidity</h3>
+                        </div>
+                        <div class="p-6">
+                            <canvas id="tempHumidityChart" class="w-full h-64"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Pressure & Gas Detection Chart -->
+                    <div class="bg-white dark:bg-gray-800 shadow rounded-lg border border-gray-200 dark:border-gray-700">
+                        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Pressure & Gas Detection</h3>
+                        </div>
+                        <div class="p-6">
+                            <canvas id="pressureGasChart" class="w-full h-64"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="px-4 py-6 sm:px-0">
+                <div class="bg-white dark:bg-gray-800 shadow rounded-lg border border-gray-200 dark:border-gray-700">
+                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Recent Readings</h3>
+                        <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                            <span id="paginationInfo">Showing 0-0 of 0 records</span>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Timestamp</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Temperature</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Humidity</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Pressure</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Gas Detection</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" id="dataTableBody">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="bg-white dark:bg-gray-800 px-4 py-3 border-t border-gray-200 dark:border-gray-700 sm:px-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between sm:hidden">
+                                <button id="prevMobile" class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Previous
+                                </button>
+                                <button id="nextMobile" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Next
+                                </button>
+                            </div>
+                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-700 dark:text-gray-300" id="paginationText">
+                                        Showing <span class="font-medium" id="showingStart">0</span> to <span class="font-medium" id="showingEnd">0</span> of <span class="font-medium" id="totalRecords">0</span> results
+                                    </p>
+                                </div>
+                                <div>
+                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" id="paginationNav">
+                                        <!-- Pagination buttons will be generated here -->
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Global data storage
+        let hvacData = [];
+        let threshold = {
+            temperature: 0,
+            humidity: 0,
+            psi: 0,
+            gasDetection: 0
+        };
+        let tempHumidityChart, pressureGasChart;
+
+        // Pagination variables
+        let currentPage = 1;
+        const recordsPerPage = 10;
+
+  
+
+
+
+        function refreshData() {
+            // Show a loading state if needed, e.g., by changing a button's text or adding a spinner.
+
+            fetch('/HVACs/data', {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            })
+            .then(response => {
+                // Check if the network request was successful
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                // Parse the JSON response
+                return response.json();
+            })
+            .then(result => {
+                console.log('API Response:', result);
+
+                // Standardize the data format
+                let data = [];
+                if (result.success && Array.isArray(result.data)) {
+                    data = result.data;
+                } else if (Array.isArray(result)) {
+                    data = result;
+                } else if (result.success === false) {
+                    console.error("API call returned success: false", result);
+                    throw new Error('API returned success: false');
+                } else {
+                    // Assume it's a single object and wrap it in an array
+                    data = [result];
+                }
+
+                // Update global data and threshold
+                hvacData = data;
+                if (result.threshold) {
+                    threshold = result.threshold;
+                }
+
+                // Check if charts exist before updating them
+                if (tempHumidityChart && pressureGasChart) {
+                    updateCharts(hvacData);
+                } else {
+                    // If charts don't exist, initialize the entire dashboard
+                    initDashboard(hvacData);
+                }
+
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                // Display a user-friendly error message in the table
+                const tbody = document.getElementById('dataTableBody');
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-4 text-center text-red-500 dark:text-red-400">Error loading data: ${error.message}</td></tr>`;
+            })
+            .finally(() => {
+                // Set a timeout to call the function again after 5 seconds
+                setTimeout(() => {
+                   refreshData();
+                }, 5000);
+            });
+        }
+        
+
+
+
+        // Initialize the dashboard
+        function initDashboard(data) {
+            if (data && data.length > 0) {
+                hvacData = data;
+                console.log('HVAC Data:', hvacData);
+            }
+
+            if (hvacData.length === 0) {
+                showNoDataMessage();
+                return;
+            }
+
+            populateStats();
+            populateTable();
+            createCharts();
+        }
+
+        // Show no data message
+        function showNoDataMessage() {
+            document.getElementById('avgTemp').textContent = '--°C';
+            document.getElementById('avgHumidity').textContent = '--%';
+            document.getElementById('avgPsi').textContent = '-- PSI'; 
+            document.getElementById('gasAlerts').textContent = '--';
+
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">No data available.</td></tr>';
+
+            updatePaginationInfo(0, 0, 0);
+            renderPaginationControls();
+        }
+
+        // Populate statistics cards
+        function populateStats() {
+            if (hvacData.length === 0) return;
+
+            const avgTemp = (hvacData.reduce((sum, item) => sum + item.temperature, 0) / hvacData.length).toFixed(1);
+            const avgHumidity = (hvacData.reduce((sum, item) => sum + item.humidity, 0) / hvacData.length).toFixed(1);
+            const avgPsi = (hvacData.reduce((sum, item) => sum + item.psi, 0) / hvacData.length).toFixed(1);
+            const avgGasLevel = (hvacData.reduce((sum, item) => sum + item.gasDetection, 0) / hvacData.length).toFixed(2);
+
+            document.getElementById('avgTemp').textContent = `${avgTemp}°F`;
+            document.getElementById('avgHumidity').textContent = `${avgHumidity}%`;
+            document.getElementById('avgPsi').textContent = `${avgPsi} PSI`;
+            document.getElementById('gasAlerts').textContent = avgGasLevel;
+        }
+
+        // Populate table with pagination
+        function populateTable() {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+
+            if (hvacData.length === 0) {
+                showNoDataMessage();
+                return;
+            }
+
+            // Calculate pagination
+            const totalRecords = hvacData.length;
+            const startIndex = (currentPage - 1) * recordsPerPage;
+            const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
+
+            // Get current page data
+            const currentPageData = hvacData.slice(startIndex, endIndex);
+
+            // Populate table rows
+            currentPageData.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150';
+
+                const formattedDate = new Date(item.timestamp).toLocaleDateString() + ' ' + new Date(item.timestamp).toLocaleTimeString();
+
+                // Highlight logic
+                const tempHighlight = item.temperature > threshold.temperature ? 'text-red-600 font-semibold' : '';
+                const humHighlight = item.humidity > threshold.humidity ? 'text-red-600 font-semibold' : '';
+                const psiHighlight = item.psi > threshold.psi ? 'text-red-600 font-semibold' : '';
+                const gasHighlight = item.gasDetection > threshold.gasDetection ? 'text-red-600 font-semibold' : '';
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">${formattedDate}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm ${tempHighlight || 'text-gray-900 dark:text-gray-100'}">${item.temperature.toFixed(1)}°F</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm ${humHighlight || 'text-gray-900 dark:text-gray-100'}">${item.humidity.toFixed(1)}%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm ${psiHighlight || 'text-gray-900 dark:text-gray-100'}">${item.psi.toFixed(2)} PSI</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm ${gasHighlight || 'text-gray-900 dark:text-gray-100'}">${item.gasDetection ? 'Detected' : 'Normal'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                        <a href="/HVACs/Details/${item.id}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-150">Details</a>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update pagination info and controls
+            updatePaginationInfo(startIndex + 1, endIndex, totalRecords);
+            renderPaginationControls();
+        }
+
+        // Update pagination information display
+        function updatePaginationInfo(start, end, total) {
+            document.getElementById('showingStart').textContent = start;
+            document.getElementById('showingEnd').textContent = end;
+            document.getElementById('totalRecords').textContent = total;
+            document.getElementById('paginationInfo').textContent = `Showing ${start}-${end} of ${total} records`;
+        }
+
+        // Render pagination controls
+        function renderPaginationControls() {
+            const totalPages = Math.ceil(hvacData.length / recordsPerPage);
+
+            // Update desktop Previous/Next buttons in the nav
+            const nav = document.getElementById('paginationNav');
+            nav.innerHTML = '';
+
+            // Previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = `
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                Previous
+            `;
+            prevBtn.disabled = currentPage <= 1;
+            prevBtn.className = `relative inline-flex items-center px-4 py-2 border rounded-l-md text-sm font-medium transition-colors duration-150 ${
+                currentPage <= 1
+                    ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-300 dark:text-gray-500 cursor-not-allowed'
+                    : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600'
+            }`;
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    populateTable();
+                }
+            });
+            nav.appendChild(prevBtn);
+
+            // Page info
+            const pageInfo = document.createElement('span');
+            pageInfo.className = 'relative inline-flex items-center px-4 py-2 border-t border-b border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300';
+            pageInfo.textContent = `${currentPage} of ${totalPages}`;
+            nav.appendChild(pageInfo);
+
+            // Next button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = `
+                Next
+                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+            `;
+            nextBtn.disabled = currentPage >= totalPages;
+            nextBtn.className = `relative inline-flex items-center px-4 py-2 border rounded-r-md text-sm font-medium transition-colors duration-150 ${
+                currentPage >= totalPages
+                    ? 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-300 dark:text-gray-500 cursor-not-allowed'
+                    : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600'
+            }`;
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    populateTable();
+                }
+            });
+            nav.appendChild(nextBtn);
+
+            // Mobile pagination
+            document.getElementById('prevMobile').disabled = currentPage <= 1;
+            document.getElementById('nextMobile').disabled = currentPage >= totalPages;
+        }
+
+        // Create pagination button
+        function createPaginationButton(text, enabled, onClick, isActive = false) {
+            const button = document.createElement('button');
+            button.textContent = text;
+            button.disabled = !enabled;
+
+            if (isActive) {
+                button.className = 'relative inline-flex items-center px-4 py-2 border text-sm font-medium bg-blue-50 dark:bg-blue-900 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-300';
+            } else if (enabled) {
+                button.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600';
+            } else {
+                button.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-300 dark:text-gray-500 cursor-default';
+            }
+
+            if (onClick && enabled) {
+                button.addEventListener('click', onClick);
+            }
+
+            return button;
+        }
+
+        // Mobile pagination event listeners
+        document.getElementById('prevMobile').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                populateTable();
+            }
+        });
+
+        document.getElementById('nextMobile').addEventListener('click', () => {
+            const totalPages = Math.ceil(hvacData.length / recordsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                populateTable();
+            }
+        });
+
+        // Create charts
+        function createCharts() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#f9fafb' : '#1f2937';
+            const gridColor = isDark ? '#374151' : '#e5e7eb';
+
+            // Temperature & Humidity Chart
+            const tempHumidityCtx = document.getElementById('tempHumidityChart').getContext('2d');
+            tempHumidityChart = new Chart(tempHumidityCtx, {
+                type: 'line',
+                data: {
+                    labels: hvacData.map(item => new Date(item.timestamp).toLocaleTimeString()),
+                    datasets: [
+                        {
+                            label: 'Temperature (°F)',
+                            data: hvacData.map(item => item.temperature),
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Humidity (%)',
+                            data: hvacData.map(item => item.humidity),
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: textColor },
+                            grid: { color: gridColor }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            ticks: { color: textColor },
+                            grid: { color: gridColor },
+                            title: {
+                                display: true,
+                                text: 'Temperature (°F)',
+                                color: textColor
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            ticks: { color: textColor },
+                            grid: { drawOnChartArea: false },
+                            title: {
+                                display: true,
+                                text: 'Humidity (%)',
+                                color: textColor
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Pressure & Gas Detection Chart
+            const pressureGasCtx = document.getElementById('pressureGasChart').getContext('2d');
+            pressureGasChart = new Chart(pressureGasCtx, {
+                type: 'line',
+                data: {
+                    labels: hvacData.map(item => new Date(item.timestamp).toLocaleTimeString()),
+                    datasets: [
+                        {
+                            label: 'Pressure (PSI)',
+                            data: hvacData.map(item => item.psi),
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Gas Detection',
+                            data: hvacData.map(item => item.gasDetection),
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: textColor
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: textColor },
+                            grid: { color: gridColor }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            ticks: { color: textColor },
+                            grid: { color: gridColor },
+                            title: {
+                                display: true,
+                                text: 'Pressure (PSI)',
+                                color: textColor
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            min: 0,
+                       
+                            ticks: {
+                                color: textColor,
+                            },
+                            grid: { drawOnChartArea: false },
+                            title: {
+                                display: true,
+                                text: 'Gas Detection',
+                                color: textColor
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update charts with new data
+        function updateCharts(data) {
+            hvacData = data;
+
+            // Update stats and table
+            populateStats();
+            populateTable();
+
+            if (hvacData.length === 0) return;
+
+            // Update chart data
+            const labels = hvacData.map(item => new Date(item.timestamp).toLocaleTimeString());
+            const tempData = hvacData.map(item => item.temperature);
+            const humidityData = hvacData.map(item => item.humidity);
+            const psiData = hvacData.map(item => item.psi);
+            const gasData = hvacData.map(item => item.gasDetection);
+
+            // Update Temperature & Humidity Chart
+            if (tempHumidityChart) {
+                tempHumidityChart.data.labels = labels;
+                tempHumidityChart.data.datasets[0].data = tempData;
+                tempHumidityChart.data.datasets[1].data = humidityData;
+                tempHumidityChart.update('none');
+            }
+
+            // Update Pressure & Gas Detection Chart
+            if (pressureGasChart) {
+                pressureGasChart.data.labels = labels;
+                pressureGasChart.data.datasets[0].data = psiData;
+                pressureGasChart.data.datasets[1].data = gasData;
+                pressureGasChart.update('none');
+            }
+        }
+
+        // Handle theme changes for charts
+        function updateChartTheme() {
+            if (!tempHumidityChart || !pressureGasChart) return;
+
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#f9fafb' : '#1f2937';
+            const gridColor = isDark ? '#374151' : '#e5e7eb';
+
+            // Update tempHumidityChart colors
+            tempHumidityChart.options.plugins.legend.labels.color = textColor;
+            tempHumidityChart.options.scales.x.ticks.color = textColor;
+            tempHumidityChart.options.scales.x.grid.color = gridColor;
+            tempHumidityChart.options.scales.y.ticks.color = textColor;
+            tempHumidityChart.options.scales.y.grid.color = gridColor;
+            tempHumidityChart.options.scales.y.title.color = textColor;
+            tempHumidityChart.options.scales.y1.ticks.color = textColor;
+            tempHumidityChart.options.scales.y1.title.color = textColor;
+
+            // Update pressureGasChart colors
+            pressureGasChart.options.plugins.legend.labels.color = textColor;
+            pressureGasChart.options.scales.x.ticks.color = textColor;
+            pressureGasChart.options.scales.x.grid.color = gridColor;
+            pressureGasChart.options.scales.y.ticks.color = textColor;
+            pressureGasChart.options.scales.y.grid.color = gridColor;
+            pressureGasChart.options.scales.y.title.color = textColor;
+            pressureGasChart.options.scales.y1.ticks.color = textColor;
+            pressureGasChart.options.scales.y1.title.color = textColor;
+
+            // Update both charts
+            tempHumidityChart.update('none');
+            pressureGasChart.update('none');
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate sample data for demonstration
+            refreshData();
+        });
+
+        // Theme observer
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class' && hvacData.length > 0) {
+                    updateChartTheme();
+                }
+            });
+        });
+        observer.observe(document.documentElement, { attributes: true });
+    </script>
+</div>

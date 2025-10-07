@@ -1,0 +1,51 @@
+﻿@model TryMeBitch.Models.AlertHistory
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>AlertHistory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="DefinitionId" class="control-label"></label>
+                <select asp-for="DefinitionId" class="form-control" asp-items="ViewBag.DefinitionId"></select>
+                <span asp-validation-for="DefinitionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FiredAt" class="control-label"></label>
+                <input asp-for="FiredAt" class="form-control" />
+                <span asp-validation-for="FiredAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecipientEmail" class="control-label"></label>
+                <input asp-for="RecipientEmail" class="form-control" />
+                <span asp-validation-for="RecipientEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ObservedValue" class="control-label"></label>
+                <input asp-for="ObservedValue" class="form-control" />
+                <span asp-validation-for="ObservedValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageSent" class="control-label"></label>
+                <input asp-for="MessageSent" class="form-control" />
+                <span asp-validation-for="MessageSent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

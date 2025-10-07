@@ -1,0 +1,488 @@
+﻿@{
+    ViewData["Title"] = "Financials";
+}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .container {
+        background: white;
+        border-radius: 12px;
+        padding: 48px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+    .logo {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .logo-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+
+        .logo-icon::after {
+            content: '🔒';
+            font-size: 24px;
+            filter: grayscale(1) brightness(10);
+        }
+
+    h1 {
+        color: #1f2937;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .subtitle {
+        color: #6b7280;
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 32px;
+        line-height: 1.5;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    label {
+        display: block;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .password-input-wrapper {
+        position: relative;
+    }
+
+    input[type="password"] {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.2s ease;
+        background-color: #fafafa;
+    }
+
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+    .btn {
+        width: 100%;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+            .btn:disabled:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            .btn:disabled::before {
+                display: none;
+            }
+
+    .warning-text {
+        background-color: #fef3cd;
+        border: 1px solid #ffd60a;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 24px;
+        font-size: 13px;
+        color: #856404;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .warning-text::before {
+            content: '⚠️';
+            font-size: 16px;
+        }
+
+    .verification-section {
+        background-color: #f0f9ff;
+        border: 2px solid #0ea5e9;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .verification-title {
+        color: #0c4a6e;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+        .verification-title::before {
+            content: '🔐';
+            font-size: 18px;
+        }
+
+    .verification-instruction {
+        color: #0369a1;
+        font-size: 14px;
+        margin-bottom: 16px;
+        line-height: 1.4;
+    }
+
+    .verification-code-display {
+        background: white;
+        border: 2px solid #0ea5e9;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+        font-family: 'Courier New', monospace;
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 4px;
+        color: #0c4a6e;
+        user-select: all;
+        position: relative;
+    }
+
+        .verification-code-display::before {
+            content: 'Security Code';
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            background: white;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 0 8px;
+            letter-spacing: normal;
+        }
+
+    #verificationCode {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 18px;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 3px;
+        text-align: center;
+        transition: all 0.2s ease;
+        background-color: white;
+    }
+
+        #verificationCode:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        #verificationCode.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+            animation: shake 0.5s ease-in-out;
+        }
+
+    @@keyframes shake {
+        0%, 100%
+
+    {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+
+    }
+
+    .verification-error {
+        color: #dc2626;
+        font-size: 13px;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-weight: 500;
+    }
+
+        .verification-error::before {
+            content: '❌';
+            font-size: 14px;
+        }
+
+    .verification-success {
+        color: #059669;
+        font-size: 13px;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-weight: 500;
+    }
+
+        .verification-success::before {
+            content: '✅';
+            font-size: 14px;
+        }
+
+    .footer-links {
+        text-align: center;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+            .footer-links a:hover {
+                color: #764ba2;
+                text-decoration: underline;
+            }
+
+    @@media (max-width: 480px) {
+        .container
+
+    {
+        padding: 32px 24px;
+        margin: 20px 12px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .verification-code-display {
+        font-size: 20px;
+        letter-spacing: 3px;
+    }
+
+    #verificationCode {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    }
+</style>
+
+<div class="container">
+    <div class="logo">
+        <div class="logo-icon"></div>
+        <h1>Security Confirmation</h1>
+        <p class="subtitle">Please confirm your password to proceed with account security action</p>
+    </div>
+
+
+    <div class="verification-section">
+        <div class="verification-title">Security Verification</div>
+        <p class="verification-instruction">Please type the security code shown below to confirm this action:</p>
+        <div class="verification-code-display" id="generatedCode">123456</div>
+        <input type="text" id="verificationCode" name="VerificationCode" required
+               placeholder="Enter the code above"
+               maxlength="6"
+               autocomplete="off">
+        <div class="verification-error" id="verificationError" style="display: none;">
+            Code does not match. Please try again.
+        </div>
+        <div class="verification-success" id="verificationSuccess" style="display: none;">
+            Code verified successfully!
+        </div>
+    </div>
+
+    <form action="/Honeypot/lockout" method="post" id="lockAccountForm">
+   
+        <button type="submit" class="btn" id="submitBtn" disabled>
+            View Financials
+        </button>
+    </form>
+
+    <div class="footer-links">
+        <a href="/Account/Login">← Back to Login</a>
+    </div>
+</div>
+
+<script>
+    let generatedCode = '';
+
+    // Generate random 6-digit code on page load
+    function generateVerificationCode() {
+        generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+        document.getElementById('generatedCode').textContent = generatedCode;
+    }
+
+    // Validate verification code
+    function validateVerificationCode() {
+        const inputCode = document.getElementById('verificationCode').value.trim();
+        const errorDiv = document.getElementById('verificationError');
+        const successDiv = document.getElementById('verificationSuccess');
+        const inputField = document.getElementById('verificationCode');
+        const submitBtn = document.getElementById('submitBtn');
+
+        if (inputCode === generatedCode) {
+            inputField.classList.remove('error');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'block';
+            return true;
+ 
+        } else if (inputCode.length === 6) {
+            inputField.classList.add('error');
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+            submitBtn.disabled = true;
+            return false;
+        } else {
+            inputField.classList.remove('error');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            submitBtn.disabled = true;
+            return false;
+        }
+    }
+
+    // Check if both fields are valid
+    function checkFormValidity() {
+
+        const isCodeValid = validateVerificationCode();
+        const submitBtn = document.getElementById('submitBtn');
+
+        if (isCodeValid) {
+            submitBtn.disabled = false;
+        } else {
+            submitBtn.disabled = true;
+        }
+    }
+
+    // Form submission validation
+    document.getElementById('lockAccountForm').addEventListener('submit', function(e) {
+        
+        const isCodeValid = validateVerificationCode();
+
+     
+
+        if (!isCodeValid) {
+            e.preventDefault();
+            document.getElementById('verificationCode').focus();
+            return false;
+        }
+
+        const btn = this.querySelector('.btn');
+        btn.innerHTML = 'Processing...';
+        btn.disabled = true;
+    });
+
+    // Real-time validation for verification code
+    document.getElementById('verificationCode').addEventListener('input', function(e) {
+        // Only allow numbers
+        this.value = this.value.replace(/[^0-9]/g, '');
+        checkFormValidity();
+    });
+
+
+ 
+
+
+
+    // Generate code when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        generateVerificationCode();
+        document.getElementById('submitBtn').disabled = true;
+    });
+</script>
