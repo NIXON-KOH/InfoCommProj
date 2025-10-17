@@ -15,11 +15,11 @@ The end goal is a responsive transport network that adapts dynamically to commut
 
 | Name   | Responsibilities | 
 |--------|-------------------|
-| [Nixon](https://github.com/NIXON-KOH)  | Project Lead, Gantry systems, Blockchain, Facial recognition gantry, Alerts, Commuter Surge Prediction, Dashboard, Honeypot, Dynamic fare pricing, JWT security, RBAC, Microsoft Identity, Integration, Automated Incident Collaboration  |
-| [Kirsty](https://github.com/Theresa-Rice) | Platform and station systems, HVAC controls, CRUD operations, incident and crowd detection, train timing, Whatsapp notifications, manpower deployment |
-| [Darel](https://github.com/DarelLeong)  | Train GPS tracking, weight monitoring, LiDAR diagnostics for wheels, depot energy usage monitoring and alerts, CRUD for alert systems |
-| [Joel](https://github.com/PootPoop)   | Brake pressure monitoring, cabin temperature monitoring, RFID logging, train CRUD, depot bay monitoring with computer vision |
-| [Kai Yi](https://github.com/Ilovedairy) | Staff module, Admin features, Training course management, One-Tab Policy |
+| [Nixon Koh](https://github.com/NIXON-KOH)  | Project Lead, Gantry systems, Blockchain, Facial recognition gantry, Alerts, Commuter Surge Prediction, Dashboard, Honeypot, Dynamic fare pricing, JWT security, RBAC, Microsoft Identity, Integration, Automated Incident Collaboration  |
+| [Kirsty Chan](https://github.com/Theresa-Rice) | Platform and station systems, HVAC controls, CRUD operations, incident and crowd detection, train timing, Whatsapp notifications, manpower deployment |
+| [Darel Leong](https://github.com/DarelLeong)  | Train GPS tracking, weight monitoring, LiDAR diagnostics for wheels, depot energy usage monitoring and alerts, CRUD for alert systems |
+| [Joel Lim](https://github.com/PootPoop)   | Brake pressure monitoring, cabin temperature monitoring, RFID logging, train CRUD, depot bay monitoring with computer vision |
+| [Lim Kai Yi](https://github.com/Ilovedairy) | Staff module, Admin features, Training course management, One-Tab Policy |
 
 ## Tech Stack
 - Azure  IoTHub
