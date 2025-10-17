@@ -1,7 +1,9 @@
 # Smart MRT System – IoT & AI-Driven Modernisation
 
 Module:  IT-3681
+
 Group:   02
+
 Theme:   Singapore MRT
 
 This project attempts a smarter, data-driven Mass Rapid Transit (MRT) ecosystem for Singapore. By addresssing current challenges such as overcrowding, reactive incident handling, and unreliable service delivery by integrating:
@@ -11,6 +13,7 @@ This project attempts a smarter, data-driven Mass Rapid Transit (MRT) ecosystem 
 - Automated systems to improve commuter experience and operational efficiency
 
 The end goal is a responsive transport network that adapts dynamically to commuter demand and ground conditions.
+
 ## Contributors
 
 | Name   | Responsibilities | 
